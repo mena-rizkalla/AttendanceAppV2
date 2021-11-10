@@ -33,7 +33,7 @@ import java.util.List;
 public class ClassListNewAdapter extends RecyclerView.Adapter<ClassListNewAdapter.ViewHolder>{
 
     Context mContext;
-    List<com.ajstudios.easyattendance.model.Class_Names> classNamesList;
+    List<Class_Names> classNamesList;
     public CardView cardView;
     public Activity mActivity;
 

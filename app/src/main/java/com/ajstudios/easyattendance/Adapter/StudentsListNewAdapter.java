@@ -5,7 +5,6 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -23,8 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ajstudios.easyattendance.BottomSheet.Student_Edit_Sheet;
 import com.ajstudios.easyattendance.R;
 import com.ajstudios.easyattendance.model.Students_List;
-import com.ajstudios.easyattendance.realm.Attendance_Students_List;
-import com.ajstudios.easyattendance.viewholders.ViewHolder_students;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,8 +32,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
-import io.realm.Realm;
 
 public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNewAdapter.ViewHolder> {
 
@@ -180,7 +174,6 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
         public TextView student_name;
         public TextView student_regNo;
         public LinearLayout layout;
-        public String stuName, regNo, mobileNo, mRoomID;
         public RadioGroup radioGroup;
         public RadioButton radioButton_present, radioButton_absent;
         public ViewHolder(@NonNull View itemView) {

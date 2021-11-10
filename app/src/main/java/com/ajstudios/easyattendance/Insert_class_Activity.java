@@ -1,6 +1,5 @@
 package com.ajstudios.easyattendance;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -13,18 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.ajstudios.easyattendance.realm.Class_Names;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Objects;
 
-import co.ceryle.radiorealbutton.library.RadioRealButton;
-import co.ceryle.radiorealbutton.library.RadioRealButtonGroup;
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
 
@@ -89,7 +82,12 @@ public class Insert_class_Activity extends AppCompatActivity {
                     hashMap.put("position_bg",position_bg);
                     reference.child(_className.getText().toString() + _subjectName.getText().toString()).setValue(hashMap);
 
-                    transaction = realm.executeTransactionAsync(new Realm.Transaction() {
+                    progressDialog.dismiss();
+                    Toast.makeText(Insert_class_Activity.this, "Successfully created", Toast.LENGTH_SHORT).show();
+                    finish();
+
+
+                    /**transaction = realm.executeTransactionAsync(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
                             Class_Names class_name = realm.createObject(Class_Names.class);
@@ -116,7 +114,7 @@ public class Insert_class_Activity extends AppCompatActivity {
                             progressDialog.dismiss();
                             Toast.makeText(Insert_class_Activity.this, "Error!", Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    });**/
                 }else{
                     Toast.makeText(Insert_class_Activity.this, "Fill all details", Toast.LENGTH_SHORT).show();
                 }

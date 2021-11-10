@@ -11,10 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.ajstudios.easyattendance.Adapter.ReportsNewAdapter;
-import com.ajstudios.easyattendance.Adapter.Reports_Detail_Adapter;
 import com.ajstudios.easyattendance.Adapter.Reports_Detail_NewAdapter;
-import com.ajstudios.easyattendance.realm.Attendance_Students_List;
+import com.ajstudios.easyattendance.model.Attendance_Students_List;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,14 +30,13 @@ import io.realm.Sort;
 public class Reports_Detail_Activity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    Reports_Detail_Adapter mAdapter;
 
     TextView subj, className, toolbar_title;
 
     Realm realm;
 
     Reports_Detail_NewAdapter reportsNewAdapter;
-    List<com.ajstudios.easyattendance.model.Attendance_Students_List> attendance_students_lists;
+    List<Attendance_Students_List> attendance_students_lists;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,11 +64,6 @@ public class Reports_Detail_Activity extends AppCompatActivity {
         readReportsDetail(room_ID,classname,subjName,date);
 
 
-        RealmResults<Attendance_Students_List> list = realm.where(Attendance_Students_List.class)
-                            .equalTo("date_and_classID", room_ID)
-                            .sort("studentName", Sort.ASCENDING)
-                            .findAllAsync();
-
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -79,7 +71,6 @@ public class Reports_Detail_Activity extends AppCompatActivity {
 
         reportsNewAdapter = new Reports_Detail_NewAdapter(Reports_Detail_Activity.this,attendance_students_lists);
 
-       // mAdapter = new Reports_Detail_Adapter( list,Reports_Detail_Activity.this, room_ID);
         recyclerView.setAdapter(reportsNewAdapter);
 
     }
@@ -91,7 +82,7 @@ public class Reports_Detail_Activity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    com.ajstudios.easyattendance.model.Attendance_Students_List attendanceStudentsList = dataSnapshot.getValue(com.ajstudios.easyattendance.model.Attendance_Students_List.class);
+                    Attendance_Students_List attendanceStudentsList = dataSnapshot.getValue(Attendance_Students_List.class);
                         attendance_students_lists.add(attendanceStudentsList);
 
                 }

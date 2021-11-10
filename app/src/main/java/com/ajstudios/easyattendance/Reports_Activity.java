@@ -10,9 +10,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.ajstudios.easyattendance.Adapter.ReportsAdapter;
 import com.ajstudios.easyattendance.Adapter.ReportsNewAdapter;
-import com.ajstudios.easyattendance.realm.Attendance_Reports;
+import com.ajstudios.easyattendance.model.Attendance_Reports;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,9 +31,8 @@ public class Reports_Activity extends AppCompatActivity {
     RecyclerView recyclerView;
     Realm realm;
 
-    ReportsAdapter mAdapter;
 
-    List<com.ajstudios.easyattendance.model.Attendance_Reports> attendance_reports;
+    List<Attendance_Reports> attendance_reports;
     ReportsNewAdapter reportsNewAdapter;
 
     @Override
@@ -55,12 +53,6 @@ public class Reports_Activity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
 
-        RealmResults<Attendance_Reports> results;
-        realm = Realm.getDefaultInstance();
-        results = realm.where(Attendance_Reports.class)
-                .equalTo("classId", room_ID)
-                .findAll();
-
 
         recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
@@ -68,7 +60,6 @@ public class Reports_Activity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
         attendance_reports = new ArrayList<>();
         reportsNewAdapter = new ReportsNewAdapter(Reports_Activity.this,attendance_reports);
-        //mAdapter = new ReportsAdapter( results,Reports_Activity.this, room_ID);
         recyclerView.setAdapter(reportsNewAdapter);
 
         readReports();
@@ -81,7 +72,7 @@ public class Reports_Activity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    com.ajstudios.easyattendance.model.Attendance_Reports attendance_report = dataSnapshot.getValue(com.ajstudios.easyattendance.model.Attendance_Reports.class);
+                    Attendance_Reports attendance_report = dataSnapshot.getValue(Attendance_Reports.class);
                     if (attendance_report.getClassId().equals(room_ID)){
                         attendance_reports.add(attendance_report);
                     }

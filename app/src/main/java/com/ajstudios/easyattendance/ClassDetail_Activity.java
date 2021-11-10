@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -30,11 +29,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ajstudios.easyattendance.Adapter.StudentsListAdapter;
 import com.ajstudios.easyattendance.Adapter.StudentsListNewAdapter;
-import com.ajstudios.easyattendance.realm.Attendance_Reports;
-import com.ajstudios.easyattendance.realm.Attendance_Students_List;
-import com.ajstudios.easyattendance.realm.Students_List;
+import com.ajstudios.easyattendance.model.Attendance_Reports;
+import com.ajstudios.easyattendance.model.Attendance_Students_List;
+import com.ajstudios.easyattendance.model.Students_List;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,9 +54,7 @@ import java.util.TimeZone;
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
 import io.realm.RealmChangeListener;
-import io.realm.RealmList;
 import io.realm.RealmResults;
-import io.realm.Sort;
 
 public class ClassDetail_Activity extends AppCompatActivity {
 
@@ -70,21 +66,17 @@ public class ClassDetail_Activity extends AppCompatActivity {
     private LinearLayout layout_attendance_taken;
     private RecyclerView mRecyclerview;
     private String date;
-    private List<com.ajstudios.easyattendance.model.Students_List> students_lists;
+    private List<Students_List> students_lists;
     private int count;
-    private List<com.ajstudios.easyattendance.model.Attendance_Students_List> list_students1;
+    private List<Attendance_Students_List> list_students1;
 
 
     String room_ID, subject_Name, class_Name;
 
     public static final String TAG = "ClassDetail_Activity";
 
-    Realm realm;
-    RealmAsyncTask transaction;
-    RealmChangeListener realmChangeListener;
 
     private Handler handler = new Handler();
-    StudentsListAdapter mAdapter;
 
     StudentsListNewAdapter adapter;
 
@@ -99,7 +91,6 @@ public class ClassDetail_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_class_detail_);
 
         getWindow().setExitTransition(null);
-        Realm.init(this);
 
         final String theme = getIntent().getStringExtra("theme");
         class_Name = getIntent().getStringExtra("className");
@@ -167,8 +158,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                //RealmInit();
-                readStudents();
+                //readStudents();
                 progressBar.setVisibility(View.GONE);
             }
         };
@@ -266,7 +256,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 students_lists.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    com.ajstudios.easyattendance.model.Students_List students_list = dataSnapshot.getValue(com.ajstudios.easyattendance.model.Students_List.class);
+                    Students_List students_list = dataSnapshot.getValue(Students_List.class);
                     if (students_list.getClass_id().equals(class_Name+subject_Name)){
                         students_lists.add(students_list);
                     }
@@ -298,7 +288,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                  count = 0;
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    com.ajstudios.easyattendance.model.Students_List students_list = dataSnapshot.getValue(com.ajstudios.easyattendance.model.Students_List.class);
+                    Students_List students_list = dataSnapshot.getValue(Students_List.class);
                     if (students_list.getClass_id().equals(class_Name+subject_Name)){
                         count ++;
                     }
@@ -317,7 +307,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    com.ajstudios.easyattendance.model.Attendance_Reports attendance_reports = snapshot.getValue(com.ajstudios.easyattendance.model.Attendance_Reports.class);
+                    Attendance_Reports attendance_reports = snapshot.getValue(Attendance_Reports.class);
                     if (attendance_reports.getDate().equals(date)) {
                         layout_attendance_taken.setVisibility(View.VISIBLE);
                         submit_btn.setVisibility(View.GONE);
@@ -354,100 +344,13 @@ public class ClassDetail_Activity extends AppCompatActivity {
         });
     }
 
-    public void RealmInit(){
-
-        Realm.init(this);
-        realm = Realm.getDefaultInstance();
-        final String date = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
-        realmChangeListener = new RealmChangeListener() {
-            @Override
-            public void onChange(Object o) {
-                long count = realm.where(Students_List.class)
-                        .equalTo("class_id", room_ID)
-                        .count();
-
-                //total_students.setText("Total Students : " + count);
-
-                long reports_size = realm.where(Attendance_Reports.class)
-                        .equalTo("date_and_classID", date+room_ID)
-                        .count();
-                if (!(reports_size==0)){
-                    layout_attendance_taken.setVisibility(View.VISIBLE);
-                    submit_btn.setVisibility(View.GONE);
-                }else {
-                    layout_attendance_taken.setVisibility(View.GONE);
-                    submit_btn.setVisibility(View.VISIBLE);
-
-                    if (!(count==0)){
-                        submit_btn.setVisibility(View.VISIBLE);
-                        place_holder.setVisibility(View.GONE);
-                    }else if (count==0) {
-                        submit_btn.setVisibility(View.GONE);
-                        place_holder.setVisibility(View.VISIBLE);
-                    }
-
-                }
-
-            }
-        };
-        realm.addChangeListener(realmChangeListener);
-        RealmResults<Students_List> students ;
-        students = realm.where(Students_List.class)
-                .equalTo("class_id", room_ID)
-                .sort("name_student", Sort.ASCENDING)
-                .findAllAsync();
-
-
-        long count = realm.where(Students_List.class)
-                .equalTo("class_id", room_ID)
-                .count();
-        long reports_size = realm.where(Attendance_Reports.class)
-                .equalTo("date_and_classID", date+room_ID)
-                .count();
-
-
-        if (!(reports_size==0)){
-            layout_attendance_taken.setVisibility(View.VISIBLE);
-            submit_btn.setVisibility(View.GONE);
-        }else if (reports_size==0) {
-
-            layout_attendance_taken.setVisibility(View.GONE);
-            submit_btn.setVisibility(View.VISIBLE);
-
-            if (!(count==0)){
-                submit_btn.setVisibility(View.VISIBLE);
-                place_holder.setVisibility(View.GONE);
-            }else if (count==0){
-                submit_btn.setVisibility(View.GONE);
-                place_holder.setVisibility(View.VISIBLE);
-            }
-        }
-
-
-        total_students.setText("Total Students : " + count);
-
-        mRecyclerview.setLayoutManager(new LinearLayoutManager(this));
-        String extraClick = "";
-        mAdapter = new StudentsListAdapter( students,ClassDetail_Activity.this, date+room_ID, extraClick);
-        mRecyclerview.setAdapter(adapter);
-
-    }
-
     public void submitAttendance(){
 
         final ProgressDialog progressDialog = new ProgressDialog(ClassDetail_Activity.this);
         progressDialog.setMessage("Please wait..");
         progressDialog.show();
          date = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
-                final RealmResults<Attendance_Students_List> list_students ;
 
-                /**list_students = realm.where(Attendance_Students_List.class)
-                        .equalTo("date_and_classID", date+room_ID)
-                        .sort("studentName", Sort.ASCENDING)
-                        .findAllAsync();
-
-                final RealmList<Attendance_Students_List> list = new RealmList<>();
-                list.addAll(list_students);**/
 
                 Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
                 final String dateOnly = String.valueOf(calendar.get(Calendar.DATE));
@@ -475,22 +378,6 @@ public class ClassDetail_Activity extends AppCompatActivity {
                     }
                 });
                 try {
-                   /** realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            Attendance_Reports attendance_reports = realm.createObject(Attendance_Reports.class);
-                            attendance_reports.setClassId(room_ID);
-                            attendance_reports.setAttendance_students_lists(list);
-                            attendance_reports.setDate(date);
-                            attendance_reports.setDateOnly(dateOnly);
-                            attendance_reports.setMonthOnly(monthOnly);
-                            attendance_reports.setDate_and_classID(date+room_ID);
-                            attendance_reports.setClassname(class_Name);
-                            attendance_reports.setSubjName(subject_Name);
-
-                        }
-
-                    });**/
 
                    /** DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Attendance_Reports");
                     HashMap<String, Object> hashMap = new HashMap<>();
@@ -531,7 +418,6 @@ public class ClassDetail_Activity extends AppCompatActivity {
                     e.printStackTrace();
                     progressDialog.dismiss();
                     Toast.makeText(ClassDetail_Activity.this, "Error Occurred", Toast.LENGTH_SHORT).show();
-                    //Toast.makeText(ClassDetail_Activity.this, list_students1.size(), Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -569,17 +455,6 @@ public class ClassDetail_Activity extends AppCompatActivity {
                 reference.child(studentName+regNo).setValue(hashMap);
                 progressDialog.dismiss();
                 lovelyCustomDialog.dismiss();
-
-
-                /**Students_List students_list = realm.createObject(Students_List.class);
-                String id = studentName+regNo;
-                students_list.setId(id);
-                students_list.setName_student(studentName);
-                students_list.setRegNo_student(regNo);
-                students_list.setMobileNo_student(mobileNo);
-                students_list.setClass_id(room_ID);**/
-
-
 
     }
 

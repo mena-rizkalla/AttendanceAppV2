@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ajstudios.easyattendance.R;
 import com.ajstudios.easyattendance.Reports_Detail_Activity;
-import com.ajstudios.easyattendance.realm.Attendance_Reports;
-import com.ajstudios.easyattendance.viewholders.ViewHolder_reports;
+import com.ajstudios.easyattendance.model.Attendance_Reports;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class ReportsNewAdapter extends RecyclerView.Adapter<ReportsNewAdapter.Vi
     Context mContext;
     List<com.ajstudios.easyattendance.model.Attendance_Reports> attendance_reports;
 
-    public ReportsNewAdapter(Context mContext, List<com.ajstudios.easyattendance.model.Attendance_Reports> attendance_reports) {
+    public ReportsNewAdapter(Context mContext, List<Attendance_Reports> attendance_reports) {
         this.mContext = mContext;
         this.attendance_reports = attendance_reports;
     }
@@ -39,7 +38,7 @@ public class ReportsNewAdapter extends RecyclerView.Adapter<ReportsNewAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        com.ajstudios.easyattendance.model.Attendance_Reports attendanceReport = attendance_reports.get(position);
+        Attendance_Reports attendanceReport = attendance_reports.get(position);
 
         holder.month.setText(attendanceReport.getMonthOnly());
         holder.date.setText(attendanceReport.getDateOnly());
@@ -69,7 +68,6 @@ public class ReportsNewAdapter extends RecyclerView.Adapter<ReportsNewAdapter.Vi
         public TextView date;
 
         public Activity mActivity;
-        RealmResults<Attendance_Reports> mList;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
