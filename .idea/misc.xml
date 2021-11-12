@@ -5,7 +5,13 @@
       <map>
         <entry key="..\:/AndroidStudioProjects/Easy-Attendance-App/app/src/main/res/layout/activity_class_detail_.xml" value="0.1721014492753623" />
         <entry key="..\:/AndroidStudioProjects/Easy-Attendance-App/app/src/main/res/layout/activity_insert_class_.xml" value="0.19655797101449277" />
+        <entry key="..\:/AndroidStudioProjects/NewAttendanceApp-main/app/src/main/res/layout/activity_class_detail_.xml" value="0.264" />
+        <entry key="..\:/AndroidStudioProjects/NewAttendanceApp-main/app/src/main/res/layout/activity_insert_class_.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/NewAttendanceApp-main/app/src/main/res/layout/bottomsheet_student_edit.xml" value="0.4" />
         <entry key="..\:/AndroidStudioProjects/NewAttendanceApp-main/app/src/main/res/layout/student_attendance_adapter.xml" value="0.536" />
+        <entry key="..\:/AndroidStudioProjects/NewAttendanceApp-main/app/src/main/res/menu/bottom_app_bar.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/NewAttendanceApp-main/app/src/main/res/menu/detail_class_menu.xml" value="0.25025641025641027" />
+        <entry key="..\:/AndroidStudioProjects/NewAttendanceApp-main/app/src/main/res/menu/only_dot.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

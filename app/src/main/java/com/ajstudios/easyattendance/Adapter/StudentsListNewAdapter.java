@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ajstudios.easyattendance.BottomSheet.Student_Edit_Sheet;
 import com.ajstudios.easyattendance.R;
+import com.ajstudios.easyattendance.model.Attendance_Reports;
 import com.ajstudios.easyattendance.model.Students_List;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -67,7 +68,7 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                     if (snapshot.exists()){
-                        com.ajstudios.easyattendance.model.Attendance_Reports attendance_reports = snapshot.getValue(com.ajstudios.easyattendance.model.Attendance_Reports.class);
+                        Attendance_Reports attendance_reports = snapshot.getValue(Attendance_Reports.class);
                         if(attendance_reports.getDate().equals(date))
                             holder.radioGroup.setVisibility(View.GONE);
                     }else {

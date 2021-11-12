@@ -74,7 +74,7 @@ public class Insert_class_Activity extends AppCompatActivity {
                     progressDialog.setMessage("Creating class..");
                     progressDialog.show();
 
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Class_Names");
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes");
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("id",_className.getText().toString() + _subjectName.getText().toString());
                     hashMap.put("name_class",_className.getText().toString());

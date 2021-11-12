@@ -22,6 +22,7 @@ import com.ajstudios.easyattendance.ClassDetail_Activity;
 import com.ajstudios.easyattendance.MainActivity;
 import com.ajstudios.easyattendance.R;
 import com.ajstudios.easyattendance.model.Class_Names;
+import com.ajstudios.easyattendance.model.Students_List;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -111,7 +112,7 @@ public class ClassListNewAdapter extends RecyclerView.Adapter<ClassListNewAdapte
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                int count = 0;
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    com.ajstudios.easyattendance.model.Students_List students_list = dataSnapshot.getValue(com.ajstudios.easyattendance.model.Students_List.class);
+                    Students_List students_list = dataSnapshot.getValue(Students_List.class);
                     if (students_list.getClass_id().equals(classNames.getName_class()+classNames.getName_subject())){
                         count ++;
                     }

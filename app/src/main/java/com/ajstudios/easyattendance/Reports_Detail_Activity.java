@@ -83,7 +83,7 @@ public class Reports_Detail_Activity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Attendance_Students_List attendanceStudentsList = dataSnapshot.getValue(Attendance_Students_List.class);
-                        attendance_students_lists.add(attendanceStudentsList);
+                    attendance_students_lists.add(attendanceStudentsList);
 
                 }
                 reportsNewAdapter.notifyDataSetChanged();

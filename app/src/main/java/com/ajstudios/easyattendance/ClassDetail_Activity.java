@@ -9,10 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -61,7 +64,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
     private ImageView themeImage;
     private TextView className, total_students, place_holder;
     private CardView addStudent, reports_open;
-    private Button submit_btn;
+    private Button submit_btn,edit_btn;
     private EditText student_name, reg_no, mobile_no;
     private LinearLayout layout_attendance_taken;
     private RecyclerView mRecyclerview;
@@ -105,6 +108,8 @@ public class ClassDetail_Activity extends AppCompatActivity {
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_disease_detail);
         collapsingToolbarLayout.setTitle(subject_Name);
 
+        edit_btn = findViewById(R.id.edit_attendance_btn);
+        edit_btn.setVisibility(View.GONE);
         themeImage = findViewById(R.id.image_disease_detail);
         className = findViewById(R.id.classname_detail);
         total_students = findViewById(R.id.total_students_detail);
@@ -245,6 +250,16 @@ public class ClassDetail_Activity extends AppCompatActivity {
             }
         });
 
+        edit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String date = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
+                FirebaseDatabase.getInstance().getReference().child("Attendance_Reports").child(date+class_Name+subject_Name).removeValue();
+                submit_btn.setVisibility(View.VISIBLE);
+                edit_btn.setVisibility(View.INVISIBLE);
+            }
+        });
+
     }
 
 
@@ -311,6 +326,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
                     if (attendance_reports.getDate().equals(date)) {
                         layout_attendance_taken.setVisibility(View.VISIBLE);
                         submit_btn.setVisibility(View.GONE);
+                        edit_btn.setVisibility(View.VISIBLE);
                     } else {
                         layout_attendance_taken.setVisibility(View.GONE);
                         submit_btn.setVisibility(View.VISIBLE);
@@ -393,7 +409,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
 
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Attendance_Reports");
-                    com.ajstudios.easyattendance.model.Attendance_Reports attendance_reports = new com.ajstudios.easyattendance.model.Attendance_Reports();
+                    Attendance_Reports attendance_reports = new Attendance_Reports();
                     attendance_reports.setClassId(room_ID);
                     // see later
                    // attendance_reports.setAttendance_students_lists(list_students1);
@@ -475,12 +491,32 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==android.R.id.home)
+        if(item.getTitle().equals("Delete Class"))
         {
-            finish();
+            AlertDialog alertDialog = new AlertDialog.Builder(ClassDetail_Activity.this)
+                    .setMessage("Are you sure you want to delete this class ")
+                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            DeleteClass();
+                        }
+                    })
+                    .setNegativeButton("No",null)
+                    .show();
+
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void DeleteClass() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(class_Name+subject_Name);
+        reference.removeValue();
+        /**DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Attendance_Reports").child(date+class_Name+subject_Name);
+        reference1.removeValue();**/
+        Intent intent = new Intent(ClassDetail_Activity.this,MainActivity.class);
+        startActivity(intent);
+        Toast.makeText(ClassDetail_Activity.this,"Class Deleted",Toast.LENGTH_SHORT).show();
     }
 
 

@@ -39,7 +39,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:focusedByDefault="true"
-        android:hint="Subject name"/>
+        android:hint="Grade"/>
 
     <EditText
         android:id="@+id/className_createClass"

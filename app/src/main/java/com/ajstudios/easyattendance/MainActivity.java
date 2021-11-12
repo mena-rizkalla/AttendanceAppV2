@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void readClasses() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Class_Names");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
