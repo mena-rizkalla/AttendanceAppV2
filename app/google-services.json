@@ -1,79 +1,42 @@
 {
   "project_info": {
-    "project_number": "227437859469",
-    "firebase_url": "https://attendece-a69c6-default-rtdb.firebaseio.com",
-    "project_id": "attendece-a69c6",
-    "storage_bucket": "attendece-a69c6.appspot.com"
+    "project_number": "475412662513",
+    "firebase_url": "https://nothing-49f0a-default-rtdb.firebaseio.com",
+    "project_id": "nothing-49f0a",
+    "storage_bucket": "nothing-49f0a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:227437859469:android:edf811f53b6e4343b008c4",
+        "mobilesdk_app_id": "1:475412662513:android:57889ff485aa3444c20150",
         "android_client_info": {
-          "package_name": "com.ajstudios.easyattendance"
+          "package_name": "com.staugustine.dimitsattendance"
         }
       },
       "oauth_client": [
         {
-          "client_id": "227437859469-4gug61bbfjhaua59iptfbsh54p3vaao6.apps.googleusercontent.com",
+          "client_id": "475412662513-87muvja6ptvidl2roh2eg1kvs6hov80a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ajstudios.easyattendance",
+            "package_name": "com.staugustine.dimitsattendance",
             "certificate_hash": "a9103cc0b552a8e43810a69f9c92fac1621cde6e"
           }
         },
         {
-          "client_id": "227437859469-vhf9t9ss0cltkt0mga4se5e9do0qt3cm.apps.googleusercontent.com",
+          "client_id": "475412662513-nu04huafk27phd0ui1re31t8g0h60hta.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyADJMBucS7jwg-K4nmrGrY0pnZ8b-FH-g0"
+          "current_key": "AIzaSyDr2WLbJoQnnl0luZLUI91GAt2rum464e8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "227437859469-vhf9t9ss0cltkt0mga4se5e9do0qt3cm.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:227437859469:android:773a43f015259742b008c4",
-        "android_client_info": {
-          "package_name": "com.example.attendence"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "227437859469-938ulcvus0ksmsasmoq426oebuhdl5gi.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.attendence",
-            "certificate_hash": "a9103cc0b552a8e43810a69f9c92fac1621cde6e"
-          }
-        },
-        {
-          "client_id": "227437859469-vhf9t9ss0cltkt0mga4se5e9do0qt3cm.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyADJMBucS7jwg-K4nmrGrY0pnZ8b-FH-g0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "227437859469-vhf9t9ss0cltkt0mga4se5e9do0qt3cm.apps.googleusercontent.com",
+              "client_id": "475412662513-nu04huafk27phd0ui1re31t8g0h60hta.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
