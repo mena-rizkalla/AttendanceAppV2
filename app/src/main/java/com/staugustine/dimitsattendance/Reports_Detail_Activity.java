@@ -1,4 +1,4 @@
-package com.ajstudios.easyattendance;
+package com.staugustine.dimitsattendance;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.ajstudios.easyattendance.Adapter.Reports_Detail_NewAdapter;
-import com.ajstudios.easyattendance.model.Attendance_Students_List;
+import com.staugustine.dimitsattendance.Adapter.Reports_Detail_NewAdapter;
+import com.staugustine.dimitsattendance.model.Attendance_Students_List;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,8 +24,6 @@ import java.util.List;
 import java.util.Objects;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
-import io.realm.Sort;
 
 public class Reports_Detail_Activity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.ajstudios.easyattendance;
+package com.staugustine.dimitsattendance;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -15,7 +15,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,10 +31,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ajstudios.easyattendance.Adapter.StudentsListNewAdapter;
-import com.ajstudios.easyattendance.model.Attendance_Reports;
-import com.ajstudios.easyattendance.model.Attendance_Students_List;
-import com.ajstudios.easyattendance.model.Students_List;
+import com.staugustine.dimitsattendance.Adapter.StudentsListNewAdapter;
+import com.staugustine.dimitsattendance.model.Attendance_Reports;
+import com.staugustine.dimitsattendance.model.Attendance_Students_List;
+import com.staugustine.dimitsattendance.model.Students_List;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,11 +52,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
-
-import io.realm.Realm;
-import io.realm.RealmAsyncTask;
-import io.realm.RealmChangeListener;
-import io.realm.RealmResults;
 
 public class ClassDetail_Activity extends AppCompatActivity {
 
@@ -265,7 +259,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
 
     private void readStudents() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Student_List");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(class_Name+subject_Name).child("Student_List");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -297,7 +291,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
     private void firebaseinit() {
         final String date = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Student_List");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(class_Name+subject_Name).child("Student_List");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -380,7 +374,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                            com.ajstudios.easyattendance.model.Attendance_Students_List attendanceStudentsList = dataSnapshot.getValue(com.ajstudios.easyattendance.model.Attendance_Students_List.class);
+                            com.staugustine.dimitsattendance.model.Attendance_Students_List attendanceStudentsList = dataSnapshot.getValue(com.staugustine.dimitsattendance.model.Attendance_Students_List.class);
                             if (attendanceStudentsList.getDate_and_classID().equals(date+room_ID)) {
                                 list_students1.add(attendanceStudentsList);
                                 Toast.makeText(ClassDetail_Activity.this, attendanceStudentsList.getClassID(), Toast.LENGTH_SHORT).show();
@@ -461,7 +455,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
         progressDialog.show();
 
 
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Student_List");
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(class_Name+subject_Name).child("Student_List");
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put("id",studentName+regNo);
                 hashMap.put("name_student",studentName);

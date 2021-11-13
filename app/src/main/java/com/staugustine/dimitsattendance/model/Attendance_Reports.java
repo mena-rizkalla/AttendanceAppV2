@@ -1,10 +1,6 @@
-package com.ajstudios.easyattendance.model;
+package com.staugustine.dimitsattendance.model;
 
 import java.util.List;
-
-import io.realm.RealmList;
-import io.realm.RealmResults;
-import io.realm.annotations.RealmField;
 
 public class Attendance_Reports {
 
@@ -15,7 +11,7 @@ public class Attendance_Reports {
     String date_and_classID;
     String classname;
     String subjName;
-    List<com.ajstudios.easyattendance.model.Attendance_Students_List> attendance_students_lists;
+    List<com.staugustine.dimitsattendance.model.Attendance_Students_List> attendance_students_lists;
 
     public Attendance_Reports() {
     }

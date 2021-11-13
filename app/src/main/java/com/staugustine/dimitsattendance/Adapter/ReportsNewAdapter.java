@@ -1,4 +1,4 @@
-package com.ajstudios.easyattendance.Adapter;
+package com.staugustine.dimitsattendance.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,17 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ajstudios.easyattendance.R;
-import com.ajstudios.easyattendance.Reports_Detail_Activity;
-import com.ajstudios.easyattendance.model.Attendance_Reports;
+import com.staugustine.dimitsattendance.R;
+import com.staugustine.dimitsattendance.Reports_Detail_Activity;
+import com.staugustine.dimitsattendance.model.Attendance_Reports;
 
 import java.util.List;
 
-import io.realm.RealmResults;
-
 public class ReportsNewAdapter extends RecyclerView.Adapter<ReportsNewAdapter.ViewHolder> {
     Context mContext;
-    List<com.ajstudios.easyattendance.model.Attendance_Reports> attendance_reports;
+    List<com.staugustine.dimitsattendance.model.Attendance_Reports> attendance_reports;
 
     public ReportsNewAdapter(Context mContext, List<Attendance_Reports> attendance_reports) {
         this.mContext = mContext;

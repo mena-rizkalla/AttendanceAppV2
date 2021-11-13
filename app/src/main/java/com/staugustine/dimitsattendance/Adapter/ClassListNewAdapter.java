@@ -1,4 +1,4 @@
-package com.ajstudios.easyattendance.Adapter;
+package com.staugustine.dimitsattendance.Adapter;
 
 import static androidx.core.app.ActivityOptionsCompat.makeSceneTransitionAnimation;
 
@@ -14,15 +14,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ajstudios.easyattendance.ClassDetail_Activity;
-import com.ajstudios.easyattendance.MainActivity;
-import com.ajstudios.easyattendance.R;
-import com.ajstudios.easyattendance.model.Class_Names;
-import com.ajstudios.easyattendance.model.Students_List;
+import com.staugustine.dimitsattendance.ClassDetail_Activity;
+import com.staugustine.dimitsattendance.R;
+import com.staugustine.dimitsattendance.model.Class_Names;
+import com.staugustine.dimitsattendance.model.Students_List;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +36,7 @@ public class ClassListNewAdapter extends RecyclerView.Adapter<ClassListNewAdapte
     public CardView cardView;
     public Activity mActivity;
 
-    public ClassListNewAdapter(Context mContext, List<com.ajstudios.easyattendance.model.Class_Names> classNamesList) {
+    public ClassListNewAdapter(Context mContext, List<com.staugustine.dimitsattendance.model.Class_Names> classNamesList) {
         this.mContext = mContext;
         this.classNamesList = classNamesList;
     }
@@ -106,7 +104,7 @@ public class ClassListNewAdapter extends RecyclerView.Adapter<ClassListNewAdapte
     }
 
     private void numberOfStudent(TextView total_students, Class_Names classNames) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Student_List");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(classNames.getId()).child("Student_List");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

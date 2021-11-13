@@ -1,4 +1,4 @@
-package com.ajstudios.easyattendance.Adapter;
+package com.staugustine.dimitsattendance.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ajstudios.easyattendance.R;
-import com.ajstudios.easyattendance.model.Attendance_Students_List;
+import com.staugustine.dimitsattendance.R;
+import com.staugustine.dimitsattendance.model.Attendance_Students_List;
 
 import java.util.List;
 

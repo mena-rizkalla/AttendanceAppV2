@@ -1,4 +1,4 @@
-package com.ajstudios.easyattendance.BottomSheet;
+package com.staugustine.dimitsattendance.BottomSheet;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -13,12 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
-import com.ajstudios.easyattendance.R;
+import com.staugustine.dimitsattendance.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
 
 public class Student_Edit_Sheet extends BottomSheetDialogFragment {
 

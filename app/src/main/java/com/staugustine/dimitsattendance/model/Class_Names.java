@@ -1,4 +1,4 @@
-package com.ajstudios.easyattendance.model;
+package com.staugustine.dimitsattendance.model;
 
 public class Class_Names {
     String id;

@@ -1,4 +1,4 @@
-package com.ajstudios.easyattendance;
+package com.staugustine.dimitsattendance;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;

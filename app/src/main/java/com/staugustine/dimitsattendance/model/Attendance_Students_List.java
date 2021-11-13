@@ -1,6 +1,4 @@
-package com.ajstudios.easyattendance.model;
-
-import io.realm.annotations.PrimaryKey;
+package com.staugustine.dimitsattendance.model;
 
 public class Attendance_Students_List {
     String studentName;

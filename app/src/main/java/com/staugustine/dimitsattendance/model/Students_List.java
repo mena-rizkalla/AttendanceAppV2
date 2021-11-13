@@ -1,6 +1,4 @@
-package com.ajstudios.easyattendance.model;
-
-import io.realm.RealmObject;
+package com.staugustine.dimitsattendance.model;
 
 public class Students_List  {
 

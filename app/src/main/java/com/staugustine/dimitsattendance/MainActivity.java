@@ -1,4 +1,4 @@
-package com.ajstudios.easyattendance;
+package com.staugustine.dimitsattendance;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -19,8 +19,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ajstudios.easyattendance.Adapter.ClassListNewAdapter;
-import com.ajstudios.easyattendance.model.Class_Names;
+import com.staugustine.dimitsattendance.Adapter.ClassListNewAdapter;
+import com.staugustine.dimitsattendance.model.Class_Names;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -31,9 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 

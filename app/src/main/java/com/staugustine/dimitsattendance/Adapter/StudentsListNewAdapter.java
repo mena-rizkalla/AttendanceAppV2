@@ -1,4 +1,4 @@
-package com.ajstudios.easyattendance.Adapter;
+package com.staugustine.dimitsattendance.Adapter;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
@@ -18,10 +18,10 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ajstudios.easyattendance.BottomSheet.Student_Edit_Sheet;
-import com.ajstudios.easyattendance.R;
-import com.ajstudios.easyattendance.model.Attendance_Reports;
-import com.ajstudios.easyattendance.model.Students_List;
+import com.staugustine.dimitsattendance.BottomSheet.Student_Edit_Sheet;
+import com.staugustine.dimitsattendance.R;
+import com.staugustine.dimitsattendance.model.Attendance_Reports;
+import com.staugustine.dimitsattendance.model.Students_List;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
