@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showAlertDialog() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this,R.style.BottomSheetTheme);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this,R.style.Base_Theme_MaterialComponents_Dialog_Alert);
         alertDialog.setTitle("Internet Connection error");
         alertDialog.setPositiveButton("Reconnect", new DialogInterface.OnClickListener() {
            @Override
