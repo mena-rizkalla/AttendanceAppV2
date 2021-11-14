@@ -44,6 +44,7 @@ public class Reports_Detail_NewAdapter extends RecyclerView.Adapter<Reports_Deta
             holder.status.setText("A");
             holder.circle.setCardBackgroundColor(mContext.getResources().getColor(R.color.red_new));
         }
+
     }
 
     @Override

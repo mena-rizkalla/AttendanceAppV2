@@ -367,39 +367,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
                 @SuppressLint("SimpleDateFormat")
                 final String monthOnly = new SimpleDateFormat("MMM").format(calendar.getTime());
 
-                 list_students1 = new ArrayList<>();
-
-                DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference().child("Attendance_Students_List");
-                reference1.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                            com.staugustine.dimitsattendance.model.Attendance_Students_List attendanceStudentsList = dataSnapshot.getValue(com.staugustine.dimitsattendance.model.Attendance_Students_List.class);
-                            if (attendanceStudentsList.getDate_and_classID().equals(date+room_ID)) {
-                                list_students1.add(attendanceStudentsList);
-                                Toast.makeText(ClassDetail_Activity.this, attendanceStudentsList.getClassID(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
                 try {
-
-                   /** DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Attendance_Reports");
-                    HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put("classId",room_ID);
-                   //     mark            hashMap.put("attendance_students_lists",list_students);    //
-                    hashMap.put("date",date);
-                    hashMap.put("dateOnly",dateOnly);
-                    hashMap.put("monthOnly",monthOnly);
-                    hashMap.put("date_and_classID",date+room_ID);
-                    hashMap.put("classname",class_Name);
-                    hashMap.put("subjName",subject_Name);
-                    reference.child(room_ID).setValue(hashMap);**/
 
 
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Attendance_Reports");
@@ -410,7 +378,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
                     attendance_reports.setDate(date);
                     attendance_reports.setDateOnly(dateOnly);
                     attendance_reports.setMonthOnly(monthOnly);
-                    attendance_reports.setDate_and_classID(date+room_ID);
+                    //attendance_reports.setDate_and_classID(date+room_ID);
                     attendance_reports.setClassname(class_Name);
                     attendance_reports.setSubjName(subject_Name);
                     reference.child(date+room_ID).setValue(attendance_reports);

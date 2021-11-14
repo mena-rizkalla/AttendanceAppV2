@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.staugustine.dimitsattendance.BottomSheet.Student_Edit_Sheet;
 import com.staugustine.dimitsattendance.R;
 import com.staugustine.dimitsattendance.model.Attendance_Reports;
+import com.staugustine.dimitsattendance.model.Attendance_Students_List;
 import com.staugustine.dimitsattendance.model.Students_List;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -60,6 +61,8 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
         holder.student_name.setText(students_list.getName_student());
         holder.student_regNo.setText(students_list.getRegNo_student());
 
+        checkAttendance(holder,students_list);
+
 
         final String date = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Attendance_Reports").child(date+students_list.getClass_id());
@@ -93,15 +96,15 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
 
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(students_list.getClass_id()).child("Attendance");
                         HashMap<Object,String> hashMap = new HashMap<>();
-                        String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id();
+                        String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getName_student();
                         hashMap.put("studentName",students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student());
                         hashMap.put("attendance",attendance);
-                        hashMap.put("mobNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student());
-                        hashMap.put("studentRegNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student());
+                        //hashMap.put("mobNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student());
+                        hashMap.put("studentRegNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student());
                         hashMap.put("classID",students_lists.get(holder.getAbsoluteAdapterPosition()).getClass_id());
                         //error on date
                         hashMap.put("date_and_classID",date+students_list.getClass_id());
-                        hashMap.put("unique_ID",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id());
+                        //hashMap.put("unique_ID",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id());
                         reference.child(date).child(uniqueId).setValue(hashMap);
                        // reference.child(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id()).setValue(hashMap);
 
@@ -119,15 +122,15 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
 
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(students_list.getClass_id()).child("Attendance");
                         HashMap<Object,String> hashMap = new HashMap<>();
-                        String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id();
+                        String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getName_student();
                         hashMap.put("studentName",students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student());
                         hashMap.put("attendance",attendance);
-                        hashMap.put("mobNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student());
+                        //hashMap.put("mobNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student());
                         hashMap.put("studentRegNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student());
                         hashMap.put("classID",students_lists.get(holder.getAbsoluteAdapterPosition()).getClass_id());
                         // error on date
                         hashMap.put("date_and_classID",date+students_list.getClass_id());
-                        hashMap.put("unique_ID",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id());
+                        //hashMap.put("unique_ID",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id());
                         reference.child(date).child(uniqueId).setValue(hashMap);
                        // reference.child(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id()).setValue(hashMap);
 
@@ -146,12 +149,7 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
             }
         });
 
-
-
-
-
-
-       SharedPreferences preferences = getDefaultSharedPreferences(mContext);
+       /**SharedPreferences preferences = getDefaultSharedPreferences(mContext);
         stuID = students_list.getRegNo_student();
         String value = preferences.getString(stuID, null);
         if (value==null){
@@ -162,8 +160,31 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
             } else {
                 holder.radioButton_absent.setChecked(true);
             }
-        }
+        }**/
 
+    }
+
+    private void checkAttendance(ViewHolder holder, Students_List students_list) {
+        final String date = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
+        String child2 = students_list.getRegNo_student()+students_list.getName_student();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(students_list.getClass_id()).child("Attendance").child(date).child(child2);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Attendance_Students_List attendanceStudentsList = snapshot.getValue(Attendance_Students_List.class);
+                    if (attendanceStudentsList.getAttendance().equals("Absent")){
+                        holder.radioButton_absent.setChecked(true);
+                    }else {
+                        holder.radioButton_present.setChecked(true);
+                    }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override

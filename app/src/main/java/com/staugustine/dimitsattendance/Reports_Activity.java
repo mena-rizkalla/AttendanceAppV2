@@ -86,7 +86,7 @@ public class Reports_Activity extends AppCompatActivity {
         });
     }
 
-    @Override
+   /** @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.only_dot, menu);
         return true;
@@ -100,5 +100,5 @@ public class Reports_Activity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }**/
 }
