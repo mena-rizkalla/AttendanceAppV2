@@ -171,13 +171,14 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
                     Attendance_Students_List attendanceStudentsList = snapshot.getValue(Attendance_Students_List.class);
-                    if (attendanceStudentsList.getAttendance().equals("Absent")){
-                        holder.radioButton_absent.setChecked(true);
-                    }else {
-                        holder.radioButton_present.setChecked(true);
-                    }
-
+                if (attendanceStudentsList.getAttendance().equals("Absent")) {
+                    holder.radioButton_absent.setChecked(true);
+                } else {
+                    holder.radioButton_present.setChecked(true);
+                }
+            }
             }
 
             @Override

@@ -97,7 +97,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_class_detail);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_disease_detail);
         collapsingToolbarLayout.setTitle(subject_Name);
