@@ -104,7 +104,7 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
                         hashMap.put("classID",students_lists.get(holder.getAbsoluteAdapterPosition()).getClass_id());
                         //error on date
                         hashMap.put("date_and_classID",date+students_list.getClass_id());
-                        //hashMap.put("unique_ID",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id());
+                        hashMap.put("unique_ID",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id());
                         reference.child(date).child(uniqueId).setValue(hashMap);
                        // reference.child(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id()).setValue(hashMap);
 
@@ -130,7 +130,7 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
                         hashMap.put("classID",students_lists.get(holder.getAbsoluteAdapterPosition()).getClass_id());
                         // error on date
                         hashMap.put("date_and_classID",date+students_list.getClass_id());
-                        //hashMap.put("unique_ID",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id());
+                        hashMap.put("unique_ID",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id());
                         reference.child(date).child(uniqueId).setValue(hashMap);
                        // reference.child(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id()).setValue(hashMap);
 

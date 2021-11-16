@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.staugustine.dimitsattendance.ClassDetail_Activity;
 import com.staugustine.dimitsattendance.R;
+import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.model.Class_Names;
 import com.staugustine.dimitsattendance.model.Students_List;
 import com.google.firebase.database.DataSnapshot;
@@ -93,11 +95,13 @@ public class ClassListNewAdapter extends RecyclerView.Adapter<ClassListNewAdapte
                 Intent intent = new Intent(view.getContext(), ClassDetail_Activity.class);
                 intent.putExtra("theme", classNamesList.get(holder.getAdapterPosition()).getPosition_bg());
                 intent.putExtra("className", classNamesList.get(holder.getAdapterPosition()).getName_class());
+                Common.currentClassName = classNamesList.get(holder.getAdapterPosition()).getName_class()+classNames.getName_subject();
                 intent.putExtra("subjectName", classNamesList.get(holder.getAdapterPosition()).getName_subject());
                 intent.putExtra("classroom_ID", classNamesList.get(holder.getAdapterPosition()).getId());
                 Pair<View, String> p1 = Pair.create((View) cardView, "ExampleTransition");
                // ActivityOptionsCompat optionsCompat = makeSceneTransitionAnimation(MainActivity.class, p1);
                 view.getContext().startActivity(intent);
+                Toast.makeText(mContext, ""+ Common.currentClassName, Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:layout_marginBottom="4dp"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:src="@drawable/asset_bg_green"
+            android:scaleType="center"
+            android:layout_marginRight="5dp"
+            android:id="@+id/img_calendar"
+            android:layout_width="120dp"
+            android:layout_height="140dp"
+            android:layout_alignParentLeft="true" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/student_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textStyle="bold"
+                android:textColor="@color/red"
+                android:textSize="24sp"
+                android:fontFamily="sans-serif"/>
+
+            <TextView
+                android:textStyle="italic"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textColor="@color/violet"
+                android:textSize="20sp"
+                android:layout_below="@+id/student_name"/>
+
+            <TextView
+                android:textStyle="italic"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/txt_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Id"
+                android:textColor="@color/medium_blue"
+                android:textSize="20sp"
+                android:layout_below="@+id/status"/>
+
+            <TextView
+                android:textStyle="italic"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/report_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_id"
+                android:text="30-10-2021"
+                android:textColor="@color/light_blue"
+                android:textSize="20sp" />
+
+
+
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
