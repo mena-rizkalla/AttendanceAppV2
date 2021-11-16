@@ -143,13 +143,13 @@ public class Student_Edit_Sheet extends BottomSheetDialogFragment {
                                             && list.getAttendance().equals("Absent")) {
 
                                         // add their value to 0 and setting the TextView of the days off
-                                        INITIAL_DAYS_OFF =+ 1;
+                                        INITIAL_DAYS_OFF += 1;
                                         totalDaysOff.setText(" " + INITIAL_DAYS_OFF);
 
 
                                     }else if (list.getUnique_ID().equals(_uniqueId)
                                             && list.getAttendance().equals("Present")){
-                                        INITIAL_DAYS_ON =+1;
+                                        INITIAL_DAYS_ON +=1;
                                         totalDaysOn.setText(""+INITIAL_DAYS_ON);
                                     }
 
