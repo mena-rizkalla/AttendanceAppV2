@@ -51,7 +51,7 @@ public class Reports_Detail_NewAdapter extends RecyclerView.Adapter<Reports_Deta
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // on clicking on a specific student to open their profile, store his/her id to call later from the StudentProfile Activity
+               /** // on clicking on a specific student to open their profile, store his/her id to call later from the StudentProfile Activity
                 SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
                 editor.putString("id", attendanceStudentsList.getUnique_ID());
                 editor.apply();
@@ -61,7 +61,7 @@ public class Reports_Detail_NewAdapter extends RecyclerView.Adapter<Reports_Deta
                 intent.putExtra("id",attendanceStudentsList.getUnique_ID());
                 intent.putExtra("name",attendanceStudentsList.getStudentName());
                 intent.putExtra("class_id",attendanceStudentsList.getClassID());
-                mContext.startActivity(intent);
+                mContext.startActivity(intent);**/
 
             }
         });

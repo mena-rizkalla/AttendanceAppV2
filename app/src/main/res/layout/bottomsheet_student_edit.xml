@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -25,6 +26,10 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/white_back_top12dp"/>
+
+
+
+
         </LinearLayout>
         <androidx.cardview.widget.CardView
             android:id="@+id/call_edit"
@@ -43,6 +48,27 @@
             android:padding="8dp"
             android:background="@drawable/gradient_theme"
             android:src="@drawable/ic_phone_call"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/detail"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="20dp"
+            android:elevation="0dp"
+            app:cardElevation="0dp"
+            android:outlineSpotShadowColor="@android:color/transparent"
+            app:cardCornerRadius="50dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:background="@drawable/gradient_theme"
+                android:src="@drawable/ic_detail"/>
+
         </androidx.cardview.widget.CardView>
     </FrameLayout>
 
@@ -53,13 +79,63 @@
             android:background="@color/white"
             android:orientation="vertical">
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:text="Edit"
         android:textColor="@color/text_color_dark"
         android:textSize="22dp"/>
 
-    <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/total_days_off"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text="0"
+                    android:textColor="@color/red"
+                    android:textSize="22dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/total_days"
+                    tools:layout_editor_absoluteY="0dp" />
+
+                <TextView
+                    android:id="@+id/total_days_on"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="0"
+                    android:textColor="@color/green"
+                    android:textSize="22dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/total_days_off"
+                    app:layout_constraintStart_toEndOf="@+id/total_days"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/total_days"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="204dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="0"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="22dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/total_days"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+            <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Student Name:"

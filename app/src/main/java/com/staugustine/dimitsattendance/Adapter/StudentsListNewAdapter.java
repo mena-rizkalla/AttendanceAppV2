@@ -126,7 +126,7 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
                         hashMap.put("studentName",students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student());
                         hashMap.put("attendance",attendance);
                         //hashMap.put("mobNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student());
-                        hashMap.put("studentRegNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student());
+                        hashMap.put("studentRegNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student());
                         hashMap.put("classID",students_lists.get(holder.getAbsoluteAdapterPosition()).getClass_id());
                         // error on date
                         hashMap.put("date_and_classID",date+students_list.getClass_id());
@@ -143,7 +143,8 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
                String stuName = students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student();
                String regNo = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student();
                String mobileNo = students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student();
-                Student_Edit_Sheet student_edit_sheet = new Student_Edit_Sheet(stuName, regNo, mobileNo);
+               String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id();
+                Student_Edit_Sheet student_edit_sheet = new Student_Edit_Sheet(stuName, regNo, mobileNo,uniqueId);
                 student_edit_sheet.setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetTheme);
                 student_edit_sheet.show(((FragmentActivity)view.getContext()).getSupportFragmentManager(), "BottomSheet");
             }
