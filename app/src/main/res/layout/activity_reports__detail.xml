@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/theme_light"
         android:textSize="16dp"
-        android:text="Subject : "/>
+        android:text="Grade :  "/>
         <TextView
             android:id="@+id/subjName_report_detail"
             android:layout_width="wrap_content"

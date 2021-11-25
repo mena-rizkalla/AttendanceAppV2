@@ -52,15 +52,6 @@
         android:focusedByDefault="true"
         android:hint="Class name"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Select theme :"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:textColor="@color/text_color_dark"
-        android:textSize="18dp"
-        android:layout_marginTop="12dp"/>
 
 <!--    <co.ceryle.radiorealbutton.library.RadioRealButtonGroup-->
 <!--        android:id="@+id/group"-->

@@ -67,7 +67,8 @@
                 android:layout_height="match_parent"
                 android:padding="8dp"
                 android:background="@drawable/gradient_theme"
-                android:src="@drawable/ic_detail"/>
+                android:src="@drawable/ic_detail"
+                />
 
         </androidx.cardview.widget.CardView>
     </FrameLayout>
@@ -81,7 +82,7 @@
     <TextView
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:text="Edit"
+        android:text="Info"
         android:textColor="@color/text_color_dark"
         android:textSize="22dp"/>
 
