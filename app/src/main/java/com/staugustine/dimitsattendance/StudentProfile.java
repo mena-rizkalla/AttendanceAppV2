@@ -22,6 +22,7 @@ import com.staugustine.dimitsattendance.Adapter.SpecificAttendanceAdapter;
 import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.model.Attendance_Students_List;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -50,8 +51,6 @@ public class StudentProfile extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(specificAttendanceAdapter);
-        specificAttendanceAdapter = new SpecificAttendanceAdapter(getApplicationContext(),attendance_students_lists);
 
         // getting the data we passed from the StudentsAdapter
         intent = getIntent().getExtras();
@@ -73,6 +72,7 @@ public class StudentProfile extends AppCompatActivity {
     }
 
     private void downloadReport() {
+        attendance_students_lists = new ArrayList<>();
         // refer to the Correct Reference
         FirebaseDatabase.getInstance().getReference("Classes").child(Common.currentClassName)
                 .child("Attendance")
@@ -101,12 +101,14 @@ public class StudentProfile extends AppCompatActivity {
                                         // add their value to 0 and setting the TextView of the days off
                                         INITIAL_DAYS_OFF += 1;
                                         total_days_off.setText(" " + INITIAL_DAYS_OFF);
+                                        attendance_students_lists.add(list);
 
 
                                     }
 
                                 }
-                                specificAttendanceAdapter.notifyDataSetChanged();
+                                recyclerView.setAdapter(specificAttendanceAdapter);
+                                specificAttendanceAdapter = new SpecificAttendanceAdapter(getApplicationContext(),attendance_students_lists);
                             }
                         } else {
                             Toast.makeText(StudentProfile.this, "err", Toast.LENGTH_SHORT).show();

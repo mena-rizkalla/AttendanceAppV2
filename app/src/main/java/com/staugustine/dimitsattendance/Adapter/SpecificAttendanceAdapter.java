@@ -32,7 +32,7 @@ public class SpecificAttendanceAdapter extends RecyclerView.Adapter<SpecificAtte
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Attendance_Students_List model = new Attendance_Students_List();
+        Attendance_Students_List model = attendance_students_lists.get(position);
         holder.student_name.setText(model.getStudentName());
         holder.status.setText(model.getAttendance());
         holder.id.setText(model.getUnique_ID());
