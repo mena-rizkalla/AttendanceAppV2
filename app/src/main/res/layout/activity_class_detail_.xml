@@ -106,16 +106,17 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Add Students"
+                        android:background="@color/theme_light"
                         android:gravity="center"
-                        android:padding="12dp"
-                        android:textSize="14dp"
                         android:maxLines="1"
+                        android:padding="12dp"
+                        android:text="Add Students"
                         android:textColor="@color/white"
-                        android:background="@color/theme_light"/>
+                        android:textSize="14dp" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -133,18 +134,29 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Reports"
+                        android:background="@color/theme_light"
                         android:gravity="center"
-                        android:padding="12dp"
-                        android:textSize="14dp"
                         android:maxLines="1"
+                        android:padding="12dp"
+                        android:text="Reports"
                         android:textColor="@color/white"
-                        android:background="@color/theme_light"/>
+                        android:textSize="14dp" />
+
+
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="upload excel Sheet"
+                android:id="@+id/excel"/>
+
+
 
         </LinearLayout>
 

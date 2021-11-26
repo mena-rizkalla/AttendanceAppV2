@@ -1,13 +1,16 @@
 package com.staugustine.dimitsattendance;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,6 +18,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +37,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.staugustine.dimitsattendance.Adapter.StudentsListNewAdapter;
 import com.staugustine.dimitsattendance.model.Attendance_Reports;
 import com.staugustine.dimitsattendance.model.Attendance_Students_List;
@@ -43,6 +51,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.yarolegovich.lovelydialog.LovelyCustomDialog;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,15 +61,22 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.TimeZone;
+import java.util.UUID;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ClassDetail_Activity extends AppCompatActivity {
 
     private ImageView themeImage;
     private TextView className, total_students, place_holder;
     private CardView addStudent, reports_open;
-    private Button submit_btn,edit_btn;
+    private Button submit_btn,edit_btn, excel;
     private EditText student_name, reg_no, mobile_no;
     private LinearLayout layout_attendance_taken;
     private RecyclerView mRecyclerview;
@@ -67,6 +85,10 @@ public class ClassDetail_Activity extends AppCompatActivity {
     private int count;
     private List<Attendance_Students_List> list_students1;
 
+    public static final int cellCount=2;
+
+    private String A;
+    private String B;
 
     String room_ID, subject_Name, class_Name;
 
@@ -122,6 +144,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
         place_holder.setVisibility(View.GONE);
         submit_btn = findViewById(R.id.submit_attendance_btn);
         submit_btn.setVisibility(View.GONE);
+        excel = findViewById(R.id.excel);
 
         readStudents();
         firebaseinit();
@@ -254,7 +277,181 @@ public class ClassDetail_Activity extends AppCompatActivity {
             }
         });
 
+        // click on excel to select a file
+        excel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(ClassDetail_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    selectfile();
+                } else {
+                    ActivityCompat.requestPermissions(ClassDetail_Activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
+                }
+            }
+        });
+
     }
+    //request for storage permission if not given
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==101){
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                selectfile();
+            }else {
+                Toast.makeText(ClassDetail_Activity.this,"Permission Not granted",Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private void selectfile(){
+        //select the file from the file storage
+        Intent intent=new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(Intent.createChooser(intent, "Select File"),102);
+    }
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==102){
+            if(resultCode==RESULT_OK){
+                String filepath=data.getData().getPath();
+                //If excel file then only select the file
+                if(filepath.endsWith(".xlsx") || filepath.endsWith(".xls")){
+                    readfile(data.getData());
+                }
+                //else show the error
+                else {
+                    //Toast.makeText(this,"Please Select an Excel file to upload",Toast.LENGTH_LONG).show();
+                    readfile(data.getData());
+                }
+            }
+        }
+    }
+
+    ProgressDialog dialog;
+    private void readfile(final Uri file)
+    {
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Uploading");
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+
+                final HashMap<String ,Object> parentmap=new HashMap<>();
+
+                try {
+                    XSSFWorkbook workbook;
+                    //check for the input from the excel file
+                    try (InputStream inputStream = getContentResolver().openInputStream(file)) {
+                        workbook = new XSSFWorkbook(inputStream);
+                    }
+                    final String timestamp=""+System.currentTimeMillis();
+                    XSSFSheet sheet=workbook.getSheetAt(0);
+                    FormulaEvaluator formulaEvaluator=workbook.getCreationHelper().createFormulaEvaluator();
+                    int rowscount=sheet.getPhysicalNumberOfRows();
+                    if(rowscount>0){
+                        //check rowwise data
+                        for (int r=0;r<rowscount;r++){
+                            Row row=sheet.getRow(r);
+                            if(row.getPhysicalNumberOfCells()==cellCount) {
+                                //get cell data
+                                String A = getCellData(row,0,formulaEvaluator);
+                                String B = getCellData(row,1,formulaEvaluator);
+                                //initialise the hashmap and put value of a and b into it
+                                HashMap<String,Object> quetionmap=new HashMap<>();
+                                quetionmap.put("name_student",A);
+                                quetionmap.put("regNo_student",B);
+                                quetionmap.put("id",A+B);
+                                quetionmap.put("mobileNo_student","011");
+                                quetionmap.put("class_id",room_ID);
+                                //String id= UUID.randomUUID().toString();
+                                parentmap.put(A+B,quetionmap);
+
+                            }
+                            else {
+                                dialog.dismiss();
+                                Toast.makeText(ClassDetail_Activity.this,"row no. "+(r+1)+" has incorrect data",Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                        }
+                        //add the data in firebase if everything is correct
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //add the data accourding to timestamp
+                                FirebaseDatabase.getInstance().getReference().child("Classes").
+                                        child(class_Name+subject_Name).child("Student_List").updateChildren(parentmap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            dialog.dismiss();
+                                            Toast.makeText(ClassDetail_Activity.this,"Uploaded Successfully",Toast.LENGTH_LONG).show();
+                                        }else {
+                                            dialog.dismiss();
+                                            Toast.makeText(ClassDetail_Activity.this,"Something went wrong",Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                    //show the error if file is empty
+                    else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.dismiss();
+                                Toast.makeText(ClassDetail_Activity.this,"File is empty",Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+                        return;
+                    }
+                }
+                //show the error message if failed due to file not found
+                catch (final FileNotFoundException e){
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(ClassDetail_Activity.this,e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                //show the error message if there is error in input outut
+                catch (final IOException e){
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Toast.makeText(ClassDetail_Activity.this,e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        });
+    }
+    private String getCellData(Row row, int cellposition, FormulaEvaluator formulaEvaluator){
+        String value="";
+        //get cell fom excel sheet
+        Cell cell=row.getCell(cellposition);
+        switch (cell.getCellType()){
+
+            case Cell.CELL_TYPE_BOOLEAN:
+                return value+cell.getBooleanCellValue();
+            case Cell.CELL_TYPE_NUMERIC:
+                return value+cell.getNumericCellValue();
+            case Cell.CELL_TYPE_STRING:
+                return value+cell.getStringCellValue();
+            default:
+                return value;
+        }
+    }
+
+
 
 
 

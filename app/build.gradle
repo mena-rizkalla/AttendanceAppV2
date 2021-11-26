@@ -15,6 +15,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -55,5 +56,12 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:28.4.2')
     implementation 'com.google.firebase:firebase-analytics'
+
+//    implementation 'org.apache.poi:poi:3.12'
+//    implementation 'org.apache.poi:poi-ooxml:3.12'
+//    implementation 'com.fasterxml:aalto-xml:1.0.0'
+
+    implementation files('libs/poi-3.12-android-a.jar')
+    implementation 'com.android.support:multidex:1.0.3'
 
 }
