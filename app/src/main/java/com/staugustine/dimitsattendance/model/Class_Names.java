@@ -6,15 +6,17 @@ public class Class_Names {
     String name_class;
     String name_subject;
     String position_bg;
+    String specificId;
 
     public Class_Names() {
     }
 
-    public Class_Names(String id, String name_class, String name_subject, String position_bg) {
+    public Class_Names(String id, String name_class, String name_subject, String position_bg, String specificId) {
         this.id = id;
         this.name_class = name_class;
         this.name_subject = name_subject;
         this.position_bg = position_bg;
+        this.specificId = specificId;
     }
 
     public String getId() {
@@ -47,5 +49,13 @@ public class Class_Names {
 
     public void setPosition_bg(String position_bg) {
         this.position_bg = position_bg;
+    }
+
+    public String getSpecificId() {
+        return specificId;
+    }
+
+    public void setSpecificId(String specificId) {
+        this.specificId = specificId;
     }
 }

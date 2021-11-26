@@ -38,7 +38,7 @@ public class ClassListNewAdapter extends RecyclerView.Adapter<ClassListNewAdapte
     public CardView cardView;
     public Activity mActivity;
 
-    public ClassListNewAdapter(Context mContext, List<com.staugustine.dimitsattendance.model.Class_Names> classNamesList) {
+    public ClassListNewAdapter(Context mContext, List<Class_Names> classNamesList) {
         this.mContext = mContext;
         this.classNamesList = classNamesList;
     }
@@ -101,7 +101,7 @@ public class ClassListNewAdapter extends RecyclerView.Adapter<ClassListNewAdapte
                 Pair<View, String> p1 = Pair.create((View) cardView, "ExampleTransition");
                // ActivityOptionsCompat optionsCompat = makeSceneTransitionAnimation(MainActivity.class, p1);
                 view.getContext().startActivity(intent);
-                Toast.makeText(mContext, ""+ Common.currentClassName, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, ""+ Common.currentClassName, Toast.LENGTH_SHORT).show();
             }
         });
 

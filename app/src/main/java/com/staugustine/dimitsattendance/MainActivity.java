@@ -34,6 +34,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    String room_ID;
     BottomAppBar bottomAppBar;
     FloatingActionButton fab_main;
     RecyclerView recyclerView;
@@ -50,12 +51,15 @@ public class MainActivity extends AppCompatActivity {
 
         getWindow().setEnterTransition(null);
 
+        room_ID = getIntent().getStringExtra("gradeDetailroom_ID");
+
         bottomAppBar = findViewById(R.id.bottomAppBar);
         fab_main = findViewById(R.id.fab_main);
         fab_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, Insert_class_Activity.class);
+                intent.putExtra("gradeDetailName", room_ID);
                 startActivity(intent);
             }
         });
@@ -87,7 +91,9 @@ public class MainActivity extends AppCompatActivity {
                 classNamesList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Class_Names classNames = dataSnapshot.getValue(Class_Names.class);
-                    classNamesList.add(classNames);
+                    if (classNames.getSpecificId().equals(room_ID)) {
+                        classNamesList.add(classNames);
+                    }
                 }
                 classListNewAdapter.notifyDataSetChanged();
             }

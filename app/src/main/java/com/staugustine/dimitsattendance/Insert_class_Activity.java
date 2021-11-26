@@ -23,12 +23,10 @@ import io.realm.RealmAsyncTask;
 
 public class Insert_class_Activity extends AppCompatActivity {
 
+    String gradeDetailroomid;
     Button create_button;
     EditText _className;
     EditText _subjectName;
-
-    Realm realm;
-    RealmAsyncTask transaction;
 
     private  String position_bg = "0";
 
@@ -41,13 +39,13 @@ public class Insert_class_Activity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_insert_class);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        gradeDetailroomid = getIntent().getStringExtra("gradeDetailName");
 
         create_button = findViewById(R.id.button_createClass);
         _className = findViewById(R.id.className_createClass);
         _subjectName = findViewById(R.id.subjectName_createClass);
 
-        Realm.init(this);
-        realm = Realm.getDefaultInstance();
+
 
 //        final RadioRealButton button1 = (RadioRealButton) findViewById(R.id.button1);
 //        final RadioRealButton button2 = (RadioRealButton) findViewById(R.id.button2);
@@ -76,6 +74,7 @@ public class Insert_class_Activity extends AppCompatActivity {
 
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes");
                     HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("specificId",gradeDetailroomid);
                     hashMap.put("id",_className.getText().toString() + _subjectName.getText().toString());
                     hashMap.put("name_class",_className.getText().toString());
                     hashMap.put("name_subject",_subjectName.getText().toString());
@@ -86,35 +85,6 @@ public class Insert_class_Activity extends AppCompatActivity {
                     Toast.makeText(Insert_class_Activity.this, "Successfully created", Toast.LENGTH_SHORT).show();
                     finish();
 
-
-                    /**transaction = realm.executeTransactionAsync(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            Class_Names class_name = realm.createObject(Class_Names.class);
-                            String id = _className.getText().toString() + _subjectName.getText().toString();
-                            class_name.setId(id);
-                            class_name.setName_class(_className.getText().toString());
-                            class_name.setName_subject(_subjectName.getText().toString());
-                            class_name.setPosition_bg(position_bg);
-
-
-
-
-                        }
-                    }, new Realm.Transaction.OnSuccess() {
-                        @Override
-                        public void onSuccess() {
-                            progressDialog.dismiss();
-                            Toast.makeText(Insert_class_Activity.this, "Successfully created", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
-                    }, new Realm.Transaction.OnError() {
-                        @Override
-                        public void onError(Throwable error) {
-                            progressDialog.dismiss();
-                            Toast.makeText(Insert_class_Activity.this, "Error!", Toast.LENGTH_SHORT).show();
-                        }
-                    });**/
                 }else{
                     Toast.makeText(Insert_class_Activity.this, "Fill all details", Toast.LENGTH_SHORT).show();
                 }

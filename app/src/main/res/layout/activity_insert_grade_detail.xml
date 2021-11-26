@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/MainBack"
+    tools:context=".InsertGradeDetailActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_insert_class"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Create Class"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Just create your class to manage daily attendance and report them. Add students in the next step"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/text_color_dark"
+        android:focusedByDefault="false"
+        android:layout_marginTop="16dp"/>
+
+
+
+    <EditText
+        android:id="@+id/grade_createClass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_back"
+        android:padding="16dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:focusedByDefault="true"
+        android:hint="Grade"/>
+
+
+    <Button
+        android:id="@+id/button_createClass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="create"
+        android:background="@drawable/button_back"
+        android:padding="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"/>
+
+</LinearLayout>
