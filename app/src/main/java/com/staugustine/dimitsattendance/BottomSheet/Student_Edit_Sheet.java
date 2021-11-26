@@ -37,6 +37,7 @@ public class Student_Edit_Sheet extends BottomSheetDialogFragment {
     public String _regNo;
     public String _mobNo;
     public String _uniqueId;
+    public String _studentId;
     public View save;
     public EditText name_student, regNo_student, mobNo_student;
     public CardView call;
@@ -44,11 +45,12 @@ public class Student_Edit_Sheet extends BottomSheetDialogFragment {
     private int INITIAL_DAYS_OFF = 0;
     private int INITIAL_DAYS_ON = 0;
 
-    public Student_Edit_Sheet(String stuName, String regNo, String mobileNo, String uniqueId) {
+    public Student_Edit_Sheet(String stuName, String regNo, String mobileNo, String uniqueId,String studentId) {
         _name = stuName;
         _regNo = regNo;
         _mobNo = mobileNo;
         _uniqueId = uniqueId;
+        _studentId = studentId;
     }
 
     @Nullable
@@ -97,12 +99,13 @@ public class Student_Edit_Sheet extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 // on clicking on a specific student to open their profile, store his/her id to call later from the StudentProfile Activity
                 SharedPreferences.Editor editor = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
-                editor.putString("id", _uniqueId);
+                editor.putString("id", _studentId);
                 editor.apply();
 
                 // open the StudentProfile Activity and pass the required info to there
                 Intent intent = new Intent(getContext(), StudentProfile.class);
                 intent.putExtra("id",_uniqueId);
+                intent.putExtra("studentId", _studentId);
                 intent.putExtra("name",_name);
                 //intent.putExtra("class_id",attendanceStudentsList.getClassID());
                 startActivity(intent);

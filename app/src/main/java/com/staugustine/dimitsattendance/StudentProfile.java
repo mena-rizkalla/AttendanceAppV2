@@ -10,10 +10,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,7 +30,7 @@ import java.util.List;
 
 public class StudentProfile extends AppCompatActivity {
     // initialize the variables
-    TextView StudentName,txt_id,total_days_off;
+    TextView StudentName,txt_id,total_days_off,delete_btn;
 
     // this variable is the initial days off of the student that we'll add their off days on
     private int INITIAL_DAYS_OFF = 0;
@@ -52,17 +54,33 @@ public class StudentProfile extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
+
         // getting the data we passed from the StudentsAdapter
         intent = getIntent().getExtras();
 
         // always avoid the nullPointerExceptions
         if(intent != null){
+            String student_id = intent.getString("studentId");
             // declaring the views and assigning their values
             StudentName = findViewById(R.id.student_name);
             StudentName.setText(intent.getString("name"));
             txt_id = findViewById(R.id.student_id);
             txt_id.setText(intent.getString("id"));
             total_days_off = findViewById(R.id.total_days_off);
+            delete_btn = findViewById(R.id.delete_btn);
+            delete_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseDatabase.getInstance().getReference("Classes").child(Common.currentClassName)
+                            .child("Student_List").child(student_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(StudentProfile.this, student_id, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            });
         }else {
             // we hope this code never executes :)
             Toast.makeText(StudentProfile.this, "Something wrong", Toast.LENGTH_SHORT).show();
@@ -107,8 +125,8 @@ public class StudentProfile extends AppCompatActivity {
                                     }
 
                                 }
-                                recyclerView.setAdapter(specificAttendanceAdapter);
                                 specificAttendanceAdapter = new SpecificAttendanceAdapter(getApplicationContext(),attendance_students_lists);
+                                recyclerView.setAdapter(specificAttendanceAdapter);
                             }
                         } else {
                             Toast.makeText(StudentProfile.this, "err", Toast.LENGTH_SHORT).show();

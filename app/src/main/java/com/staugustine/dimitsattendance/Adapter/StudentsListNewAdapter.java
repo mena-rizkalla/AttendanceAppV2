@@ -140,11 +140,12 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String studentId = students_lists.get(holder.getAbsoluteAdapterPosition()).getId();
                String stuName = students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student();
                String regNo = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student();
                String mobileNo = students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student();
                String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id();
-                Student_Edit_Sheet student_edit_sheet = new Student_Edit_Sheet(stuName, regNo, mobileNo,uniqueId);
+                Student_Edit_Sheet student_edit_sheet = new Student_Edit_Sheet(stuName, regNo, mobileNo,uniqueId,studentId);
                 student_edit_sheet.setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetTheme);
                 student_edit_sheet.show(((FragmentActivity)view.getContext()).getSupportFragmentManager(), "BottomSheet");
             }
