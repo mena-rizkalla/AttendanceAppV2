@@ -61,7 +61,7 @@ public class AdminActivity extends AppCompatActivity {
                 String str_password = password.getText().toString();
                 if ( TextUtils.isEmpty(str_password)){
                     Toast.makeText(AdminActivity.this,"All fields are required ",Toast.LENGTH_SHORT).show();
-                }else if (str_password.equals("1234567")){
+                }else if (str_password.equals("12")){
                     Intent intent = new Intent(AdminActivity.this,HomeActivity.class);
                     startActivity(intent);
                 }

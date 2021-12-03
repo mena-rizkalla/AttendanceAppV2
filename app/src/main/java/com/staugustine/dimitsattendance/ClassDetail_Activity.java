@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,6 +41,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.staugustine.dimitsattendance.Adapter.StudentsListNewAdapter;
+import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.model.Attendance_Reports;
 import com.staugustine.dimitsattendance.model.Attendance_Students_List;
 import com.staugustine.dimitsattendance.model.Students_List;
@@ -73,10 +75,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ClassDetail_Activity extends AppCompatActivity {
 
+    static final Integer WRITE_EXST = 0x3;
+    static final Integer READ_EXST = 0x4;
     private ImageView themeImage;
     private TextView className, total_students, place_holder;
     private CardView addStudent, reports_open;
-    private Button submit_btn,edit_btn, excel;
+    private Button submit_btn,edit_btn, excel,exportexcel;
     private EditText student_name, reg_no, mobile_no;
     private LinearLayout layout_attendance_taken;
     private RecyclerView mRecyclerview;
@@ -145,7 +149,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
         submit_btn = findViewById(R.id.submit_attendance_btn);
         submit_btn.setVisibility(View.GONE);
         excel = findViewById(R.id.excel);
-
+        exportexcel = findViewById(R.id.exportexcel);
         readStudents();
         firebaseinit();
 
@@ -277,6 +281,17 @@ public class ClassDetail_Activity extends AppCompatActivity {
             }
         });
 
+        exportexcel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                askForPermission(Manifest.permission.READ_EXTERNAL_STORAGE, READ_EXST);
+                askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_EXST);
+                ExcelExporter.export();
+                Toast.makeText(getApplicationContext(), Common.currentClassName,Toast.LENGTH_LONG).show();
+            }
+        });
+
         // click on excel to select a file
         excel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -290,6 +305,30 @@ public class ClassDetail_Activity extends AppCompatActivity {
         });
 
     }
+
+    private void askForPermission(String permission, Integer requestCode) {
+        if (ContextCompat.checkSelfPermission(ClassDetail_Activity.this, permission)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    ClassDetail_Activity.this, permission)) {
+
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(ClassDetail_Activity.this,
+                        new String[]{permission}, requestCode);
+
+            } else {
+                ActivityCompat.requestPermissions(ClassDetail_Activity.this,
+                        new String[]{permission}, requestCode);
+            }
+        } else {
+//            Toast.makeText(this, permission + " is already granted.",
+//                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
     //request for storage permission if not given
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -450,6 +489,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
                 return value;
         }
     }
+
 
 
 

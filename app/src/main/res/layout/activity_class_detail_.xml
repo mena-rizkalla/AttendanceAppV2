@@ -151,10 +151,16 @@
             </androidx.cardview.widget.CardView>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="85dp"
                 android:layout_height="wrap_content"
-                android:text="upload excel Sheet"
+                android:text="import excel "
                 android:id="@+id/excel"/>
+
+            <Button
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:text="Export excel"
+                android:id="@+id/exportexcel"/>
 
 
 

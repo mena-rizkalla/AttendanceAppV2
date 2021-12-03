@@ -3,7 +3,7 @@ apply plugin: 'realm-android'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId "com.staugustine.dimitsattendance"
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -60,6 +60,8 @@ dependencies {
 //    implementation 'org.apache.poi:poi:3.12'
 //    implementation 'org.apache.poi:poi-ooxml:3.12'
 //    implementation 'com.fasterxml:aalto-xml:1.0.0'
+
+    compile group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6'
 
     implementation files('libs/poi-3.12-android-a.jar')
     implementation 'com.android.support:multidex:1.0.3'
