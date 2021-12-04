@@ -26,6 +26,12 @@
             android:textSize="18dp"
             android:textStyle="bold"
             android:layout_gravity="center"/>
+
+        <Button
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:text="Export excel"
+            android:id="@+id/exportexcel"/>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView

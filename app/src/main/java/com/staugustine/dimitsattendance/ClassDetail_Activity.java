@@ -64,12 +64,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.UUID;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -287,7 +285,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
                 askForPermission(Manifest.permission.READ_EXTERNAL_STORAGE, READ_EXST);
                 askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_EXST);
-                ExcelExporter.export();
+                ExcelExporter.export(date, class_Name);
                 Toast.makeText(getApplicationContext(), Common.currentClassName,Toast.LENGTH_LONG).show();
             }
         });

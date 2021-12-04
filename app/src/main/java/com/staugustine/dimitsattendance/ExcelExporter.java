@@ -1,14 +1,7 @@
 package com.staugustine.dimitsattendance;
 
-import static android.content.Intent.getIntent;
-
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Environment;
-import android.os.ParcelFileDescriptor;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -17,37 +10,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.staugustine.dimitsattendance.Adapter.SpecificAttendanceAdapter;
 import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.model.Attendance_Students_List;
-import com.staugustine.dimitsattendance.model.Class_Names;
-import com.staugustine.dimitsattendance.model.Students_List;
-
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.ss.formula.functions.T;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellValue;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.util.WorkbookUtil;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 import jxl.Workbook;
 import jxl.WorkbookSettings;
-import jxl.biff.WritableRecordData;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
@@ -56,13 +29,15 @@ import jxl.write.WriteException;
 public class ExcelExporter {
 
     static Context context;
+    static WritableSheet sheetA;
+    static WritableWorkbook workbook;
 
 
 
 
-    public static void export(){
+    public static void export(String date, String classname){
         File sd = Environment.getExternalStorageDirectory();
-        String excelFile = "yourFile.xls";
+        String excelFile = date+classname+"studentData.xls";
 
         File directory = new File(sd.getAbsolutePath());
 
@@ -74,7 +49,7 @@ public class ExcelExporter {
         try{
 
             //file path
-            File file = new File(directory, excelFile);
+            /**File file = new File(directory, excelFile);
             WorkbookSettings workbookSettings = new WorkbookSettings();
             workbookSettings.setLocale(new Locale(Locale.ENGLISH.getLanguage(),Locale.ENGLISH.getCountry()));
 
@@ -92,7 +67,7 @@ public class ExcelExporter {
             sheetA.addCell(new Label(0, 5, "sheet A3333"));
 
 
-            WritableSheet sheetB = workbook.createSheet("sheet B", 1);
+            WritableSheet sheetB = workbook.createSheet("sheet B", 1);**/
 
 
 //            // column and row titles
@@ -104,36 +79,51 @@ public class ExcelExporter {
 
 
 
-            FirebaseDatabase.getInstance().getReference("Classes").child(Common.currentClassName).child("Attendance").child("28-Nov-2021").addValueEventListener(new ValueEventListener() {
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(Common.currentClassName).child("Attendance").child(date);
+                    reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
+                    List<String> list = new ArrayList<>();
+                    List<String> list1 = new ArrayList<>();
 
-                        ArrayList<String> list = new ArrayList<>();
-
-                        for (int i = 0; i < snapshot.getChildrenCount(); i++) {
-
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                                Attendance_Students_List class_names = dataSnapshot.getValue(Attendance_Students_List.class);
-                                list.add(class_names.getStudentName());
-
-
-
-                                try {
-                                    sheetB.addCell(new Label(0,i,list.get(i)));
-                                } catch (WriteException e) {
-                                    e.printStackTrace();
-                                }
-
-
-
-
-                            }
-
-                        }
-
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                        Attendance_Students_List class_names = dataSnapshot.getValue(Attendance_Students_List.class);
+                        list.add(class_names.getStudentName());
+                        list1.add(class_names.getAttendance());
 
                     }
+
+                    File file = new File(directory, excelFile);
+                    WorkbookSettings workbookSettings = new WorkbookSettings();
+                    workbookSettings.setLocale(new Locale(Locale.ENGLISH.getLanguage(),Locale.ENGLISH.getCountry()));
+
+                    try {
+                        workbook = Workbook.createWorkbook(file, workbookSettings);
+                        sheetA = workbook.createSheet("SheetA",0);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    int i;
+                    for (i = 0; i < snapshot.getChildrenCount(); i++) {
+                            try {
+                                sheetA.addCell(new Label(0,i,list.get(i)));
+                                sheetA.addCell(new Label(2,i,list1.get(i)));
+                                sheetA.addCell(new Label(4,i,date));
+
+
+                            } catch (WriteException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    try {
+                        workbook.write();
+                        workbook.close();
+                    } catch (IOException | WriteException e) {
+                        e.printStackTrace();
+                    }
+
                 }
 
                 @Override
@@ -143,8 +133,8 @@ public class ExcelExporter {
             });
 
 
-            workbook.write();
-            workbook.close();
+           // workbook.write();
+           // workbook.close();
 
 
 

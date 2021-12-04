@@ -1,17 +1,25 @@
 package com.staugustine.dimitsattendance;
 
+import static com.staugustine.dimitsattendance.ClassDetail_Activity.READ_EXST;
+import static com.staugustine.dimitsattendance.ClassDetail_Activity.WRITE_EXST;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.staugustine.dimitsattendance.Adapter.Reports_Detail_NewAdapter;
+import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.model.Attendance_Students_List;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,8 +38,8 @@ public class Reports_Detail_Activity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     TextView subj, className, toolbar_title;
+    private Button exportexcel;
 
-    Realm realm;
 
     Reports_Detail_NewAdapter reportsNewAdapter;
     List<Attendance_Students_List> attendance_students_lists;
@@ -39,8 +47,7 @@ public class Reports_Detail_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports__detail);
-        Realm.init(this);
-        realm = Realm.getDefaultInstance();
+
 
         String room_ID = getIntent().getStringExtra("ID");
         String classname = getIntent().getStringExtra("class");
@@ -58,6 +65,7 @@ public class Reports_Detail_Activity extends AppCompatActivity {
         toolbar_title.setText(date);
         subj.setText(subjName);
         className.setText(classname);
+        exportexcel = findViewById(R.id.exportexcel);
 
         readReportsDetail(room_ID,classname,subjName,date);
 
@@ -71,7 +79,17 @@ public class Reports_Detail_Activity extends AppCompatActivity {
 
         recyclerView.setAdapter(reportsNewAdapter);
 
+        exportexcel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ExcelExporter.export(date,classname);
+
+            }
+        });
+
     }
+
+
 
     private void readReportsDetail(String room_ID, String classname, String subjName, String date) {
         //attendance_students_lists.clear();

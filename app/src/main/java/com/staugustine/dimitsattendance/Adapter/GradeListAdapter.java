@@ -47,6 +47,7 @@ public class GradeListAdapter extends RecyclerView.Adapter<GradeListAdapter.View
        Grade_Names grade_names = gradeNamesList.get(position);
        holder.class_name.setVisibility(View.GONE);
        holder.subject_name.setText(grade_names.getName_grade());
+       holder.subject_name.setGravity(1);
        holder.total_students.setVisibility(View.GONE);
 
         switch (grade_names.getPosition_bg()){

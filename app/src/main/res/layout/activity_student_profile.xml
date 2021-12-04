@@ -63,13 +63,16 @@
         android:textSize="24sp" />
 
     <Button
+        android:id="@+id/select_from"
         android:layout_width="144dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/total_days_off"
-        android:layout_margin="10dp"
-        android:id="@+id/select_from"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:text="SELECT From"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/txt_select_from"
