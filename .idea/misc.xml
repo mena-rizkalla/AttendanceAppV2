@@ -41,6 +41,7 @@
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/activity_reports.xml" value="0.264" />
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/activity_student_profile.xml" value="0.264" />
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/bottomsheet_student_edit.xml" value="0.13677536231884058" />
+        <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/popup_add_student.xml" value="0.25416666666666665" />
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/report_detail_adapter_item.xml" value="0.264" />
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/reports_adapter_item.xml" value="0.25416666666666665" />
       </map>

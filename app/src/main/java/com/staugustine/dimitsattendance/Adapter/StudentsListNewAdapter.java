@@ -86,7 +86,7 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
             }
         });
 
-        holder.radioButton_present.setChecked(true);
+
         if (holder.radioButton_present.isChecked()){
             final String attendance = "Present";
             SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit();
@@ -201,7 +201,27 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
                 } else {
                     holder.radioButton_present.setChecked(true);
                 }
-            }
+            }else{
+                    holder.radioButton_present.setChecked(true);
+                    final String attendance = "Present";
+                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit();
+                    editor.putString(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student(), attendance);
+                    editor.apply();
+
+                    DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Classes").child(students_list.getClass_id()).child("Attendance");
+                    HashMap<Object,String> hashMap = new HashMap<>();
+                    String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getName_student();
+                    hashMap.put("studentName",students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student());
+                    hashMap.put("attendance",attendance);
+                    //hashMap.put("mobNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student());
+                    hashMap.put("studentRegNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student());
+                    hashMap.put("classID",students_lists.get(holder.getAbsoluteAdapterPosition()).getClass_id());
+                    //error on date
+                    hashMap.put("date",date);
+                    hashMap.put("unique_ID",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id());
+                    reference1.child(date).child(uniqueId).setValue(hashMap);
+                    // reference.child(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id()).setValue(hashMap);
+                }
             }
 
             @Override

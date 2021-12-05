@@ -79,7 +79,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
     private TextView className, total_students, place_holder;
     private CardView addStudent, reports_open;
     private Button submit_btn,edit_btn, excel,exportexcel;
-    private EditText student_name, reg_no, mobile_no;
+    private EditText student_name, reg_no;
     private LinearLayout layout_attendance_taken;
     private RecyclerView mRecyclerview;
     private String date;
@@ -233,7 +233,6 @@ public class ClassDetail_Activity extends AppCompatActivity {
                     final View view1 = inflater.inflate(R.layout.popup_add_student, null);
                     student_name = view1.findViewById(R.id.name_student_popup);
                     reg_no = view1.findViewById(R.id.regNo_student_popup);
-                    mobile_no = view1.findViewById(R.id.mobileNo_student_popup);
 
                     lovelyCustomDialog = new LovelyCustomDialog(ClassDetail_Activity.this)
                             .setView(view1)
@@ -672,7 +671,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
     public boolean isValid(){
 
-        if (student_name.getText().toString().isEmpty() || reg_no.getText().toString().isEmpty() || mobile_no.getText().toString().isEmpty()){
+        if (student_name.getText().toString().isEmpty() || reg_no.getText().toString().isEmpty() ){
             return false;
         }
         return true;

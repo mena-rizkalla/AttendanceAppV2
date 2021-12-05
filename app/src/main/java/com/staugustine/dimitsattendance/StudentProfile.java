@@ -226,6 +226,8 @@ public class StudentProfile extends AppCompatActivity {
                                 attendance_students_lists.add(list);
 
 
+                            }else{
+                                total_days_off.setText(" " + INITIAL_DAYS_OFF);
                             }
 
                         }
@@ -279,8 +281,8 @@ public class StudentProfile extends AppCompatActivity {
                                     }
 
                                 }
-                                recyclerView.setAdapter(specificAttendanceAdapter);
                                 specificAttendanceAdapter = new SpecificAttendanceAdapter(getApplicationContext(),attendance_students_lists);
+                                recyclerView.setAdapter(specificAttendanceAdapter);
                             }
                         } else {
                             Toast.makeText(StudentProfile.this, "err", Toast.LENGTH_SHORT).show();

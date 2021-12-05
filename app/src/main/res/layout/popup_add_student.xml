@@ -29,17 +29,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:hint="Reg. No"/>
-        <EditText
-            android:id="@+id/mobileNo_student_popup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="5dp"
-            android:inputType="number"
-            android:hint="Mobile No"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
