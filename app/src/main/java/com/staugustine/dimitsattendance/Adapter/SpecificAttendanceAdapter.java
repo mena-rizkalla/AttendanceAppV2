@@ -36,10 +36,10 @@ public class SpecificAttendanceAdapter extends RecyclerView.Adapter<SpecificAtte
         holder.student_name.setText(model.getStudentName());
         holder.status.setText(model.getAttendance());
         holder.id.setText(model.getUnique_ID());
-        if(model.getDate_and_classID() == null){
+        if(model.getDate() == null){
             holder.date.setVisibility(View.INVISIBLE);
         }else {
-            holder.date.setText(model.getDate_and_classID());
+            holder.date.setText(model.getDate());
 
         }
 

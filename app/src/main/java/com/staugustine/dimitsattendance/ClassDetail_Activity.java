@@ -247,10 +247,10 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
                                     String name = student_name.getText().toString();
                                     String regNo = reg_no.getText().toString();
-                                    String mobNo = mobile_no.getText().toString();
+
 
                                     if (isValid()){
-                                    addStudentMethod(name, regNo, mobNo);
+                                    addStudentMethod(name, regNo);
                                     }else{
                                         Toast.makeText(ClassDetail_Activity.this, "Please fill all the details..", Toast.LENGTH_SHORT).show();
                                     }
@@ -651,7 +651,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void addStudentMethod(final String studentName, final String regNo, final String mobileNo) {
+    public void addStudentMethod(final String studentName, final String regNo) {
 
         final ProgressDialog progressDialog = new ProgressDialog(ClassDetail_Activity.this);
         progressDialog.setMessage("Creating class..");
@@ -663,7 +663,6 @@ public class ClassDetail_Activity extends AppCompatActivity {
                 hashMap.put("id",studentName+regNo);
                 hashMap.put("name_student",studentName);
                 hashMap.put("regNo_student",regNo);
-                hashMap.put("mobileNo_student",mobileNo);
                 hashMap.put("class_id",room_ID);
                 reference.child(studentName+regNo).setValue(hashMap);
                 progressDialog.dismiss();

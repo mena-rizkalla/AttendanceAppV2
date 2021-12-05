@@ -5,17 +5,15 @@ public class Students_List  {
     String id;
     String name_student;
     String regNo_student;
-    String mobileNo_student;
     String class_id;
 
     public Students_List() {
     }
 
-    public Students_List(String id, String name_student, String regNo_student, String mobileNo_student, String class_id) {
+    public Students_List(String id, String name_student, String regNo_student, String class_id) {
         this.id = id;
         this.name_student = name_student;
         this.regNo_student = regNo_student;
-        this.mobileNo_student = mobileNo_student;
         this.class_id = class_id;
     }
 
@@ -53,12 +51,5 @@ public class Students_List  {
         this.class_id = class_id;
     }
 
-    public String getMobileNo_student() {
-        return mobileNo_student;
-    }
-
-    public void setMobileNo_student(String mobileNo_student) {
-        this.mobileNo_student = mobileNo_student;
-    }
 
 }

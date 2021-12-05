@@ -6,19 +6,19 @@ public class Attendance_Students_List {
     String attendance;
     String mobNo;
     String classID;
-    String date_and_classID;
+    String date;
     String unique_ID;
 
     public Attendance_Students_List() {
     }
 
-    public Attendance_Students_List(String studentName, String studentRegNo, String attendance, String mobNo, String classID, String date_and_classID, String unique_ID) {
+    public Attendance_Students_List(String studentName, String studentRegNo, String attendance, String mobNo, String classID, String date, String unique_ID) {
         this.studentName = studentName;
         this.studentRegNo = studentRegNo;
         this.attendance = attendance;
         this.mobNo = mobNo;
         this.classID = classID;
-        this.date_and_classID = date_and_classID;
+        this.date = date;
         this.unique_ID = unique_ID;
     }
 
@@ -62,12 +62,12 @@ public class Attendance_Students_List {
         this.classID = classID;
     }
 
-    public String getDate_and_classID() {
-        return date_and_classID;
+    public String getDate() {
+        return date;
     }
 
-    public void setDate_and_classID(String date_and_classID) {
-        this.date_and_classID = date_and_classID;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getUnique_ID() {

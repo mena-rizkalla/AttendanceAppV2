@@ -31,25 +31,9 @@
 
 
         </LinearLayout>
-        <androidx.cardview.widget.CardView
-            android:id="@+id/call_edit"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="20dp"
-            android:elevation="0dp"
-            app:cardElevation="0dp"
-            android:outlineSpotShadowColor="@android:color/transparent"
-            app:cardCornerRadius="50dp">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            android:background="@drawable/gradient_theme"
-            android:src="@drawable/ic_phone_call"/>
 
-        </androidx.cardview.widget.CardView>
+
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/detail"
@@ -165,12 +149,6 @@
         android:text="Mobile No:"
         android:layout_marginTop="10dp"
         android:textColor="@color/theme_light"/>
-    <EditText
-        android:id="@+id/stu_mobNo_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

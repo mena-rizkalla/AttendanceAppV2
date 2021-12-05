@@ -35,20 +35,17 @@ public class Student_Edit_Sheet extends BottomSheetDialogFragment {
     public TextView totalDays;
     public TextView totalDaysOn;
     public String _regNo;
-    public String _mobNo;
     public String _uniqueId;
     public String _studentId;
     public View save;
     public EditText name_student, regNo_student, mobNo_student;
-    public CardView call;
     public CardView detail;
     private int INITIAL_DAYS_OFF = 0;
     private int INITIAL_DAYS_ON = 0;
 
-    public Student_Edit_Sheet(String stuName, String regNo, String mobileNo, String uniqueId,String studentId) {
+    public Student_Edit_Sheet(String stuName, String regNo,String uniqueId,String studentId) {
         _name = stuName;
         _regNo = regNo;
-        _mobNo = mobileNo;
         _uniqueId = uniqueId;
         _studentId = studentId;
     }
@@ -63,14 +60,11 @@ public class Student_Edit_Sheet extends BottomSheetDialogFragment {
         totalDaysOff = v.findViewById(R.id.total_days_off);
         name_student = v.findViewById(R.id.stu_name_edit);
         regNo_student = v.findViewById(R.id.stu_regNo_edit);
-        mobNo_student = v.findViewById(R.id.stu_mobNo_edit);
-        call = v.findViewById(R.id.call_edit);
         detail = v.findViewById(R.id.detail);
         save = v.findViewById(R.id.save);
 
         name_student.setText(_name);
         regNo_student.setText(_regNo);
-        mobNo_student.setText(_mobNo);
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,15 +79,7 @@ public class Student_Edit_Sheet extends BottomSheetDialogFragment {
             }
         });
 
-        call.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String uri = "tel:" + _mobNo.trim();
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse(uri));
-                startActivity(intent);
-            }
-        });
+        
         detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
