@@ -35,7 +35,7 @@ public class ExcelExporter {
 
 
 
-    public static void export(String date, String classname){
+    public static void export(String date, String classname,String subjecname){
         File sd = Environment.getExternalStorageDirectory();
         String excelFile = date+classname+"studentData.xls";
 
@@ -79,7 +79,7 @@ public class ExcelExporter {
 
 
 
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(Common.currentClassName).child("Attendance").child(date);
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(classname+subjecname).child("Attendance").child(date);
                     reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

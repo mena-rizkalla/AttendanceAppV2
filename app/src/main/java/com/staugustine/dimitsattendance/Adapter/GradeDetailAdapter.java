@@ -70,7 +70,6 @@ public class GradeDetailAdapter extends RecyclerView.Adapter<GradeDetailAdapter.
                 Intent intent = new Intent(view.getContext(), MainActivity.class);
                 intent.putExtra("theme", gradeNamesList.get(holder.getAdapterPosition()).getPosition_bg());
                 intent.putExtra("gradeDetailName", gradeNamesList.get(holder.getAdapterPosition()).getName_grade());
-                Common.currentClassName = gradeNamesList.get(holder.getAdapterPosition()).getName_grade();
                 intent.putExtra("gradeDetailroom_ID", gradeNamesList.get(holder.getAdapterPosition()).getId());
                 Pair<View, String> p1 = Pair.create((View) cardView, "ExampleTransition");
                 // ActivityOptionsCompat optionsCompat = makeSceneTransitionAnimation(MainActivity.class, p1);

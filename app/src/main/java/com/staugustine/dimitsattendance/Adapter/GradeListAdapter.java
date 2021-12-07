@@ -72,8 +72,8 @@ public class GradeListAdapter extends RecyclerView.Adapter<GradeListAdapter.View
                 Intent intent = new Intent(view.getContext(), GradeDetailActivity.class);
                 intent.putExtra("theme", gradeNamesList.get(holder.getAdapterPosition()).getPosition_bg());
                 intent.putExtra("gradeName", gradeNamesList.get(holder.getAdapterPosition()).getName_grade());
-                Common.currentClassName = gradeNamesList.get(holder.getAdapterPosition()).getName_grade();
                 intent.putExtra("graderoom_ID", gradeNamesList.get(holder.getAdapterPosition()).getId());
+                Common.currentGrade = gradeNamesList.get(holder.getAdapterPosition()).getName_grade();
                 Pair<View, String> p1 = Pair.create((View) cardView, "ExampleTransition");
                 // ActivityOptionsCompat optionsCompat = makeSceneTransitionAnimation(MainActivity.class, p1);
                 view.getContext().startActivity(intent);

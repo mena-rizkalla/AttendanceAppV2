@@ -19,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -40,7 +41,7 @@ import java.util.Locale;
 
 public class StudentProfile extends AppCompatActivity {
     // initialize the variables
-    TextView StudentName,txt_id,total_days_off,txt_select_to,txt_select_from,get_reports;
+    TextView StudentName,txt_id,total_days_off,txt_select_to,txt_select_from,get_reports,delete_btn;
     Button select_from,select_to;
     private int year, month, day, yearTo, monthTo, dayTo;
 
@@ -76,14 +77,32 @@ public class StudentProfile extends AppCompatActivity {
         // getting the data we passed from the StudentsAdapter
         intent = getIntent().getExtras();
 
+        delete_btn = findViewById(R.id.delete_btn);
+
+
         // always avoid the nullPointerExceptions
         if(intent != null){
             // declaring the views and assigning their values
+            String student_id = intent.getString("studentId");
             StudentName = findViewById(R.id.student_name);
             StudentName.setText(intent.getString("name"));
             txt_id = findViewById(R.id.student_id);
             txt_id.setText(intent.getString("id"));
             total_days_off = findViewById(R.id.total_days_off);
+
+            delete_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseDatabase.getInstance().getReference("Classes").child(Common.currentClassName)
+                            .child("Student_List").child(student_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(StudentProfile.this, student_id, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            });
         }else {
             // we hope this code never executes :)
             Toast.makeText(StudentProfile.this, "Something wrong", Toast.LENGTH_SHORT).show();
@@ -103,6 +122,8 @@ public class StudentProfile extends AppCompatActivity {
                 setDateTo();
             }
         });
+
+
 
         get_reports.setOnClickListener(new View.OnClickListener() {
             @Override

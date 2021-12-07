@@ -19,6 +19,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/exportGrade"
+                android:layout_width="311dp"
+                android:layout_height="wrap_content"
+                android:text="@string/export"
+                android:textColor="#272727" />
+
             <TextView
                 android:id="@+id/classes_sample"
                 android:layout_width="match_parent"

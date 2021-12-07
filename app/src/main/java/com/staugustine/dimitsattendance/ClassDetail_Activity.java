@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.staugustine.dimitsattendance.Adapter.StudentsListNewAdapter;
+import com.staugustine.dimitsattendance.BottomSheet.Student_Edit_Sheet;
 import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.model.Attendance_Reports;
 import com.staugustine.dimitsattendance.model.Attendance_Students_List;
@@ -284,7 +285,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
                 askForPermission(Manifest.permission.READ_EXTERNAL_STORAGE, READ_EXST);
                 askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_EXST);
-                ExcelExporter.export(date, class_Name);
+                ExcelExporter.export(date, class_Name,subject_Name);
                 Toast.makeText(getApplicationContext(), Common.currentClassName,Toast.LENGTH_LONG).show();
             }
         });
@@ -393,16 +394,16 @@ public class ClassDetail_Activity extends AppCompatActivity {
                             if(row.getPhysicalNumberOfCells()==cellCount) {
                                 //get cell data
                                 String A = getCellData(row,0,formulaEvaluator);
-                                String B = getCellData(row,1,formulaEvaluator);
+                                //String B = getCellData(row,1,formulaEvaluator);
                                 //initialise the hashmap and put value of a and b into it
                                 HashMap<String,Object> quetionmap=new HashMap<>();
                                 quetionmap.put("name_student",A);
-                                quetionmap.put("regNo_student",B);
-                                quetionmap.put("id",A+B);
+                                quetionmap.put("regNo_student",r+"m");
+                                quetionmap.put("id",A+r+"m");
                                 quetionmap.put("mobileNo_student","011");
                                 quetionmap.put("class_id",room_ID);
                                 //String id= UUID.randomUUID().toString();
-                                parentmap.put(A+B,quetionmap);
+                                parentmap.put(A+r+"m",quetionmap);
 
                             }
                             else {
@@ -620,8 +621,8 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                     SharedPreferences.Editor editor = preferences.edit();
+                    editor.apply();
                     editor.clear();
-                    editor.commit();
                     Toast.makeText(ClassDetail_Activity.this, "Attendance Submitted", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
 

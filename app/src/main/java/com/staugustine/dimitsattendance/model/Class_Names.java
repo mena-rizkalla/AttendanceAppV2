@@ -7,6 +7,7 @@ public class Class_Names {
     String name_subject;
     String position_bg;
     String specificId;
+    String gradeType;
 
     public Class_Names() {
     }
@@ -17,6 +18,15 @@ public class Class_Names {
         this.name_subject = name_subject;
         this.position_bg = position_bg;
         this.specificId = specificId;
+    }
+
+    public Class_Names(String id, String name_class, String name_subject, String position_bg, String specificId, String gradeType) {
+        this.id = id;
+        this.name_class = name_class;
+        this.name_subject = name_subject;
+        this.position_bg = position_bg;
+        this.specificId = specificId;
+        this.gradeType = gradeType;
     }
 
     public String getId() {
@@ -57,5 +67,13 @@ public class Class_Names {
 
     public void setSpecificId(String specificId) {
         this.specificId = specificId;
+    }
+
+    public String getGradeType() {
+        return gradeType;
+    }
+
+    public void setGradeType(String gradeType) {
+        this.gradeType = gradeType;
     }
 }

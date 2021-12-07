@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.staugustine.dimitsattendance.common.Common;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -23,7 +24,7 @@ import io.realm.RealmAsyncTask;
 
 public class Insert_class_Activity extends AppCompatActivity {
 
-    String gradeDetailroomid;
+    String gradeDetailroomid,gradeType;
     Button create_button;
     EditText _className;
     EditText _subjectName;
@@ -40,6 +41,7 @@ public class Insert_class_Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         gradeDetailroomid = getIntent().getStringExtra("gradeDetailName");
+        gradeType= Common.currentGrade;
 
         create_button = findViewById(R.id.button_createClass);
         _className = findViewById(R.id.className_createClass);
@@ -79,6 +81,7 @@ public class Insert_class_Activity extends AppCompatActivity {
                     hashMap.put("name_class",_className.getText().toString());
                     hashMap.put("name_subject",_subjectName.getText().toString());
                     hashMap.put("position_bg",position_bg);
+                    hashMap.put("gradeType",gradeType);
                     reference.child(_className.getText().toString() + _subjectName.getText().toString()).setValue(hashMap);
 
                     progressDialog.dismiss();

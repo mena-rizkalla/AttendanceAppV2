@@ -82,7 +82,7 @@ public class Reports_Detail_Activity extends AppCompatActivity {
         exportexcel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ExcelExporter.export(date,classname);
+                ExcelExporter.export(date,classname,subjName);
 
             }
         });

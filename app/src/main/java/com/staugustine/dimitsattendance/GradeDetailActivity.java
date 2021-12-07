@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.staugustine.dimitsattendance.Adapter.GradeDetailAdapter;
-import com.staugustine.dimitsattendance.Adapter.GradeListAdapter;
+import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.model.Grade_Names;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class GradeDetailActivity extends AppCompatActivity {
 
     BottomAppBar bottomAppBar;
     FloatingActionButton fab_main;
+    Button exportGrade;
     RecyclerView recyclerView;
     TextView sample;
     List<Grade_Names> gradeNamesList;
@@ -48,6 +50,7 @@ public class GradeDetailActivity extends AppCompatActivity {
         gradeName = getIntent().getStringExtra("gradeName");
         room_ID = getIntent().getStringExtra("graderoom_ID");
 
+        exportGrade = findViewById(R.id.exportGrade);
         bottomAppBar = findViewById(R.id.bottomAppBar);
         fab_main = findViewById(R.id.fab_main);
         fab_main.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +75,12 @@ public class GradeDetailActivity extends AppCompatActivity {
 
         Toast.makeText(GradeDetailActivity.this,gradeName,Toast.LENGTH_SHORT).show();
         readGradeDetail();
+        exportGrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ExportGrade.export(gradeName);
+            }
+        });
     }
 
     private void readGradeDetail() {

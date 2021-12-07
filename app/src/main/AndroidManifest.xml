@@ -8,9 +8,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="ST Augustine Attendance"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/offitsauglo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/offitsauglo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:requestLegacyExternalStorage="true">
@@ -35,12 +35,12 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:label="@string/title_activity_login"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".StartActivity"
             android:exported="true"
-            android:label="@string/title_activity_start"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,6 +62,7 @@
             android:name=".Insert_class_Activity"
             android:theme="@style/AppTheme2" />
         <activity android:name=".MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
