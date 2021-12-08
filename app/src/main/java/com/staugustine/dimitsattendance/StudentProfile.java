@@ -76,6 +76,10 @@ public class StudentProfile extends AppCompatActivity {
         select_to = findViewById(R.id.select_to);
         get_reports = findViewById(R.id.get_reports);
 
+        Calendar calendar= Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR)+1;
+
+
 
         // getting the data we passed from the StudentsAdapter
         intent = getIntent().getExtras();
@@ -214,6 +218,7 @@ public class StudentProfile extends AppCompatActivity {
 
     private DatePickerDialog.OnDateSetListener myDateListenerFrom = new
             DatePickerDialog.OnDateSetListener() {
+
                 @Override
                 public void onDateSet(DatePicker arg0,
                                       int arg1, int arg2, int arg3) {

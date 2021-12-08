@@ -76,6 +76,8 @@ public class Reports_Activity extends AppCompatActivity {
         toolbar.setSubtitle(className);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
+        Calendar calendar= Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR)+1;
 
 
         recyclerView.setHasFixedSize(true);

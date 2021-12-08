@@ -6,10 +6,13 @@ import static com.staugustine.dimitsattendance.ClassDetail_Activity.WRITE_EXST;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +39,8 @@ import io.realm.Realm;
 public class Reports_Detail_Activity extends AppCompatActivity {
 
     RecyclerView recyclerView;
+    static final Integer WRITE_EXST = 0x3;
+    static final Integer READ_EXST = 0x4;
 
     TextView subj, className, toolbar_title;
     private Button exportexcel;
@@ -82,11 +87,37 @@ public class Reports_Detail_Activity extends AppCompatActivity {
         exportexcel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                askForPermission(Manifest.permission.READ_EXTERNAL_STORAGE, READ_EXST);
+                askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_EXST);
                 ExcelExporter.export(date,classname,subjName);
 
             }
         });
 
+    }
+
+    private void askForPermission(String permission, Integer requestCode) {
+        if (ContextCompat.checkSelfPermission(Reports_Detail_Activity.this, permission)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    Reports_Detail_Activity.this, permission)) {
+
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(Reports_Detail_Activity.this,
+                        new String[]{permission}, requestCode);
+
+            } else {
+                ActivityCompat.requestPermissions(Reports_Detail_Activity.this,
+                        new String[]{permission}, requestCode);
+            }
+        } else {
+//            Toast.makeText(this, permission + " is already granted.",
+//                    Toast.LENGTH_SHORT).show();
+        }
     }
 
 

@@ -1,8 +1,8 @@
 package com.staugustine.dimitsattendance;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Environment;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -11,22 +11,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.staugustine.dimitsattendance.common.Common;
-import com.staugustine.dimitsattendance.model.Attendance_Students_List;
 import com.staugustine.dimitsattendance.model.Class_Names;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import jxl.Workbook;
 import jxl.WorkbookSettings;
-import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
-import jxl.write.WriteException;
 
 public class ExportGrade {
 
@@ -39,16 +37,16 @@ public class ExportGrade {
 
 
 
-    public static void export(String GradeName){
-        File sd = Environment.getExternalStorageDirectory();
-        String excelFile = GradeName+"studentData.xls";
-
-        File directory = new File(sd.getAbsolutePath());
-
-        //create directory if not exist
-        if (!directory.isDirectory()) {
-            directory.mkdirs();
-        }
+    public static void export(String GradeName, String date){
+//        File sd = Environment.getExternalStorageDirectory();
+//       // String excelFile = GradeName+"studentData.xls";
+//
+//        File directory = new File(sd.getAbsolutePath());
+//
+//        //create directory if not exist
+//        if (!directory.isDirectory()) {
+//            directory.mkdirs();
+//        }
 
         try{
 
@@ -80,17 +78,17 @@ public class ExportGrade {
 //            sheetB.addCell(new Label(0, 1, "sheet B 3"));
 //            sheetB.addCell(new Label(1, 1, "sheet B 4"));
 
-            File file = new File(directory, excelFile);
-            WorkbookSettings workbookSettings = new WorkbookSettings();
-            workbookSettings.setLocale(new Locale(Locale.ENGLISH.getLanguage(),Locale.ENGLISH.getCountry()));
-
-            try {
-                workbook = Workbook.createWorkbook(file, workbookSettings);
-         //       sheetA = workbook.createSheet("SheetA",0);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            File file = new File(directory, excelFile);
+//            WorkbookSettings workbookSettings = new WorkbookSettings();
+//            workbookSettings.setLocale(new Locale(Locale.ENGLISH.getLanguage(),Locale.ENGLISH.getCountry()));
+//
+//            try {
+//                workbook = Workbook.createWorkbook(file, workbookSettings);
+//         //       sheetA = workbook.createSheet("SheetA",0);
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
 
 
@@ -120,8 +118,9 @@ public class ExportGrade {
                         String className = list1.get(l);
 
 
+                        //Toast.makeText(getApplicationContext(),date2,Toast.LENGTH_SHORT).show();
 
-                        ExcelExporter.export("05-Dec-2021",className,"");
+                        ExcelExporter.export(date,className,"");
 
 //                        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Classes").child(className).child("Attendance").child("05-Dec-2021");
 //                        reference1.addValueEventListener(new ValueEventListener() {
