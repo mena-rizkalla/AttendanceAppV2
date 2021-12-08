@@ -16,6 +16,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,6 +27,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -80,7 +83,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
     private TextView className, total_students, place_holder;
     private CardView addStudent, reports_open;
     private Button submit_btn,edit_btn, excel,exportexcel;
-    private EditText student_name, reg_no;
+    private EditText student_name, reg_no,edt_search;
     private LinearLayout layout_attendance_taken;
     private RecyclerView mRecyclerview;
     private String date;
@@ -93,6 +96,8 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
     private String A;
     private String B;
+
+    Context context;
 
     String room_ID, subject_Name, class_Name;
 
@@ -130,6 +135,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
         edit_btn = findViewById(R.id.edit_attendance_btn);
         edit_btn.setVisibility(View.GONE);
+        edt_search = findViewById(R.id.edt_search);
         themeImage = findViewById(R.id.image_disease_detail);
         className = findViewById(R.id.classname_detail);
         total_students = findViewById(R.id.total_students_detail);
@@ -726,10 +732,41 @@ public class ClassDetail_Activity extends AppCompatActivity {
                     .setNegativeButton("No",null)
                     .show();
 
+        }if (item.getTitle().equals("Search Students")){
+            edt_search.setVisibility(View.VISIBLE);
+            edt_search.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    searchStudent(s.toString());
+                }
+            });
+
         }
 
         return super.onOptionsItemSelected(item);
     }
+    private void searchStudent(String search_txt) {
+        List<Students_List> students_list = new ArrayList<>();
+        for (Students_List student : students_lists){
+            if (student.getName_student().toLowerCase().contains(search_txt.toLowerCase())){
+                students_list.add(student);
+            }
+        }
+        adapter = new StudentsListNewAdapter(context,students_list);
+        mRecyclerview.setAdapter(adapter);
+
+    }
+
 
     private void DeleteClass() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(class_Name+subject_Name);
