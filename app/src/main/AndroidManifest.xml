@@ -50,17 +50,21 @@
         </activity>
         <activity
             android:name=".StudentProfile"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme2"/>
         <activity
             android:name=".Reports_Detail_Activity"
             android:theme="@style/AppTheme2" />
-        <activity android:name=".Reports_Activity" />
+        <activity android:name=".Reports_Activity"
+            android:theme="@style/AppTheme2"/>
         <activity
             android:name=".ClassDetail_Activity"
             android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".Insert_class_Activity"
             android:theme="@style/AppTheme2" />
+
+
         <activity android:name=".MainActivity">
 
             <intent-filter>

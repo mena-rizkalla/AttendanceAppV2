@@ -87,6 +87,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
     private List<Students_List> students_lists;
     private int count;
     private List<Attendance_Students_List> list_students1;
+    private AlertDialog.Builder builder;
 
     public static final int cellCount=2;
 
@@ -639,9 +640,34 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
-    }
 
+        if(submit_btn.getVisibility() == View.VISIBLE){
+            builder = new AlertDialog.Builder(this);
+            builder.setMessage("please click submit button to submit the attendance \n" +
+                    "من فضلك اضغط علي زر submit لتسجيل حضور اليوم ")
+                    .setCancelable(false)
+                    .setPositiveButton("Submit \n تسجيل", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            submitAttendance();
+                            finish();
+
+                        }
+                    })
+                    .setNegativeButton("edit \n تعديل", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            dialogInterface.cancel();
+                        }
+                    });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }else {
+            finish();
+        }
+
+    }
     @Override
     protected void onDestroy() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);

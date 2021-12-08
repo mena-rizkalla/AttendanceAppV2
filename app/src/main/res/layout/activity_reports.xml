@@ -32,13 +32,12 @@
         android:layout_marginRight="12dp"/>
 
     <Button
+        android:id="@+id/select_from"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/recyclerView_reports"
-        android:background="@color/black"
         android:text="SELECT From"
-        android:textColor="@color/black"
-        android:id="@+id/select_from"/>
+        android:textColor="@color/black" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,13 +48,12 @@
         android:id="@+id/txt_select_from"/>
 
     <Button
+        android:id="@+id/select_to"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_select_from"
-        android:background="@color/black"
         android:text="SELECT To"
-        android:textColor="@color/black"
-        android:id="@+id/select_to"/>
+        android:textColor="@color/black" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,13 +64,12 @@
         android:id="@+id/txt_select_to"/>
 
     <Button
+        android:id="@+id/get_reports"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_select_to"
-        android:background="@color/black"
         android:text="GET REPORTS"
-        android:textColor="@color/black"
-        android:id="@+id/get_reports"/>
+        android:textColor="@color/black" />
 
 
 

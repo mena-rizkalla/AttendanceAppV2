@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,6 +56,7 @@ public class StudentProfile extends AppCompatActivity {
     RecyclerView recyclerView;
     List<Attendance_Students_List> attendance_students_lists;
     SpecificAttendanceAdapter specificAttendanceAdapter;
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,20 +89,37 @@ public class StudentProfile extends AppCompatActivity {
             String student_id = intent.getString("studentId");
             StudentName = findViewById(R.id.student_name);
             StudentName.setText(intent.getString("name"));
-            txt_id = findViewById(R.id.student_id);
-            txt_id.setText(intent.getString("id"));
             total_days_off = findViewById(R.id.total_days_off);
 
             delete_btn.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
-                    FirebaseDatabase.getInstance().getReference("Classes").child(Common.currentClassName)
-                            .child("Student_List").child(student_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(StudentProfile.this, student_id, Toast.LENGTH_SHORT).show();
-                        }
-                    });
+
+                    builder = new AlertDialog.Builder(StudentProfile.this);
+                    builder.setMessage("تاكيد الحذف")
+                            .setCancelable(true)
+                            .setPositiveButton("حذف", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    FirebaseDatabase.getInstance().getReference("Classes").child(Common.currentClassName)
+                                            .child("Student_List").child(student_id).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Toast.makeText(StudentProfile.this, "تم الحذف", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        }
+                                    });
+                                }
+                            })
+                            .setNegativeButton("لا", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
 
                 }
             });

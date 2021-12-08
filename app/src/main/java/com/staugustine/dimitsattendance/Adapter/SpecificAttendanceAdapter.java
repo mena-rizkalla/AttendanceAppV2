@@ -35,7 +35,6 @@ public class SpecificAttendanceAdapter extends RecyclerView.Adapter<SpecificAtte
         Attendance_Students_List model = attendance_students_lists.get(position);
         holder.student_name.setText(model.getStudentName());
         holder.status.setText(model.getAttendance());
-        holder.id.setText(model.getUnique_ID());
         if(model.getDate() == null){
             holder.date.setVisibility(View.INVISIBLE);
         }else {
@@ -58,7 +57,6 @@ public class SpecificAttendanceAdapter extends RecyclerView.Adapter<SpecificAtte
             super(itemView);
             student_name = itemView.findViewById(R.id.student_name);
             status = itemView.findViewById(R.id.status);
-            id = itemView.findViewById(R.id.txt_id);
             date = itemView.findViewById(R.id.report_date);
         }
     }
