@@ -6,10 +6,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.staugustine.dimitsattendance.Adapter.ClassListNewAdapter;
 import com.staugustine.dimitsattendance.Adapter.GradeListAdapter;
+import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.model.Class_Names;
 import com.staugustine.dimitsattendance.model.Grade_Names;
 
@@ -31,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
     BottomAppBar bottomAppBar;
     FloatingActionButton fab_main;
     RecyclerView recyclerView;
-    TextView sample;
+    TextView sample,verify_btn;
     List<Grade_Names> gradeNamesList;
 
     GradeListAdapter gradeListNewAdapter;
@@ -43,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
         bottomAppBar = findViewById(R.id.bottomAppBar);
+        verify_btn = findViewById(R.id.verify_btn);
         fab_main = findViewById(R.id.fab_main);
         fab_main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +73,16 @@ public class HomeActivity extends AppCompatActivity {
 
 
         readGrade();
+        if (Common.currentUserType.equals("admin")) {
+            verify_btn.setVisibility(View.VISIBLE);
+        }
+        verify_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,UsersVerification.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void readGrade() {

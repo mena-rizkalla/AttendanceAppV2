@@ -14,7 +14,7 @@
         android:layout_marginTop="?attr/actionBarSize"
         android:clipToPadding="false">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -29,6 +29,7 @@
                 android:layout_marginRight="16dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_below="@id/classes_sample"
                 android:id="@+id/recyclerView_main"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -36,7 +37,25 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp" />
 
-        </LinearLayout>
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/verify_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recyclerView_main"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/button_back"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="Verify Users"
+                android:textColor="@color/green"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 
     <androidx.appcompat.widget.Toolbar

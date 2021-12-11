@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.databinding.ActivityAdminBinding;
 import com.staugustine.dimitsattendance.databinding.ActivityLoginBinding;
 import com.staugustine.dimitsattendance.databinding.ActivityStartBinding;
@@ -63,6 +64,7 @@ public class AdminActivity extends AppCompatActivity {
                     Toast.makeText(AdminActivity.this,"All fields are required ",Toast.LENGTH_SHORT).show();
                 }else if (str_password.equals("12")){
                     Intent intent = new Intent(AdminActivity.this,HomeActivity.class);
+                    Common.currentUserType = "admin";
                     startActivity(intent);
                 }
 

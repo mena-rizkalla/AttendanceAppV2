@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:layout_marginBottom="4dp"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+
+        <ImageView
+            android:src="@drawable/verify"
+            android:scaleType="center"
+            android:layout_marginRight="5dp"
+            android:id="@+id/student_img"
+            android:layout_width="120dp"
+            android:layout_height="140dp"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="3dp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Teacher Name"
+            android:textSize="16sp"
+            android:textColor="@color/red"
+            android:id="@+id/teacher_name"
+            android:fontFamily="sans-serif-black"
+            android:layout_toRightOf="@+id/student_img"
+            android:layout_alignParentTop="true" />
+
+
+
+        <ImageView
+            android:id="@+id/wrong_btn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/teacher_name"
+            android:src="@drawable/wrong"/>
+
+        <ImageView
+            android:layout_marginRight="10dp"
+            android:id="@+id/true_btn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_toLeftOf="@+id/wrong_btn"
+            android:layout_below="@+id/teacher_name"
+            android:src="@drawable/check"/>
+
+
+
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

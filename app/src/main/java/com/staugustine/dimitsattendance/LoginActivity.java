@@ -1,6 +1,7 @@
 package com.staugustine.dimitsattendance;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -30,7 +31,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.databinding.ActivityLoginBinding;
+import com.staugustine.dimitsattendance.model.User;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -83,10 +86,18 @@ public class LoginActivity extends AppCompatActivity {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 pd.dismiss();
-                                                Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                startActivity(intent);
-                                                finish();
+                                                if (dataSnapshot.exists()) {
+                                                    User user = dataSnapshot.getValue(User.class);
+                                                    if (user.getActive().equals("1")) {
+                                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                        Common.currentUserType = "user";
+                                                        startActivity(intent);
+                                                        finish();
+                                                    } else {
+                                                        showBannedDialog();
+                                                    }
+                                                }
                                             }
 
                                             @Override
@@ -105,6 +116,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showBannedDialog() {
+        androidx.appcompat.app.AlertDialog.Builder banned = new androidx.appcompat.app.AlertDialog.Builder(this);
+        banned.setTitle("Verification Alert !");
+        banned.setMessage("Please, ask the admin or the headmaster to verify your account to use the Application.");
+        banned.show();
     }
 
 }
