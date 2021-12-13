@@ -92,7 +92,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
     private List<Attendance_Students_List> list_students1;
     private AlertDialog.Builder builder;
 
-    public static final int cellCount=2;
+    public static final int cellCount=1;
 
     private String A;
     private String B;
@@ -405,12 +405,11 @@ public class ClassDetail_Activity extends AppCompatActivity {
                                 //initialise the hashmap and put value of a and b into it
                                 HashMap<String,Object> quetionmap=new HashMap<>();
                                 quetionmap.put("name_student",A);
-                                quetionmap.put("regNo_student",r+"m");
-                                quetionmap.put("id",A+r+"m");
-                                quetionmap.put("mobileNo_student","011");
+                                quetionmap.put("regNo_student",String.valueOf(r));
+                                quetionmap.put("id",A+r);
                                 quetionmap.put("class_id",room_ID);
                                 //String id= UUID.randomUUID().toString();
-                                parentmap.put(A+r+"m",quetionmap);
+                                parentmap.put(A+r,quetionmap);
 
                             }
                             else {
