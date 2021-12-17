@@ -18,13 +18,16 @@
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_reports__detail.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_start.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_student_profile.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_users_verification.xml" value="0.1852355072463768" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/bottomsheet_student_edit.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/class_adapter.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/grade_item.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/popup_add_student.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/report_detail_adapter_item.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/reports_adapter_item.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/specific_attendance_item.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/student_attendance_adapter.xml" value="0.1838768115942029" />
+        <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/user_item.xml" value="0.39351851851851855" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2703125" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2703125" />
         <entry key="..\:/AndroidStudioProjects/Easy-Attendance-App/app/src/main/res/layout/activity_class_detail_.xml" value="0.1721014492753623" />

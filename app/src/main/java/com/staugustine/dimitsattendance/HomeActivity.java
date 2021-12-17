@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,12 +30,15 @@ import com.staugustine.dimitsattendance.Adapter.GradeListAdapter;
 import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.model.Class_Names;
 import com.staugustine.dimitsattendance.model.Grade_Names;
+import com.staugustine.dimitsattendance.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
 
+    String gradeType;
     BottomAppBar bottomAppBar;
     FloatingActionButton fab_main;
     RecyclerView recyclerView;
@@ -41,6 +46,8 @@ public class HomeActivity extends AppCompatActivity {
     List<Grade_Names> gradeNamesList;
 
     GradeListAdapter gradeListNewAdapter;
+
+    FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +66,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
+
 
         sample = findViewById(R.id.classes_sample);
         recyclerView = findViewById(R.id.recyclerView_main);
@@ -72,9 +83,26 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setAdapter(gradeListNewAdapter);
 
 
-        readGrade();
+
+
         if (Common.currentUserType.equals("admin")) {
             verify_btn.setVisibility(View.VISIBLE);
+            readGrade();
+        }else {
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).child("grade");
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    gradeType= (String) snapshot.getValue();
+                    readGradeUser(gradeType);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         }
         verify_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +112,27 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void readGradeUser(String gradeType) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Grade").child(gradeType);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                gradeNamesList.clear();
+
+                    Grade_Names gradeNames = snapshot.getValue(Grade_Names.class);
+                    gradeNamesList.add(gradeNames);
+
+                gradeListNewAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 
     private void readGrade() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Grade");

@@ -164,13 +164,7 @@
                 android:layout_height="wrap_content"
                 android:text="import excel "
                 android:id="@+id/excel"/>
-
-            <Button
-                android:layout_width="85dp"
-                android:layout_height="wrap_content"
-                android:text="Export excel"
-                android:id="@+id/exportexcel"/>
-
+            
 
 
         </LinearLayout>

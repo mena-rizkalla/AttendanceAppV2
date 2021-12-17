@@ -12,6 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.staugustine.dimitsattendance.R;
 import com.staugustine.dimitsattendance.model.User;
@@ -43,6 +46,21 @@ public class UserVerificationAdapter extends RecyclerView.Adapter<UserVerificati
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         User user = list.get(position);
         holder.teacher_name.setText(user.getUsername());
+        holder.chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(ChipGroup group, int checkedId) {
+                Chip chip = group.findViewById(checkedId);
+                if (chip != null)
+                    Toast.makeText(context, "Chip is " + chip.getChipText()+chip.getId(), Toast.LENGTH_SHORT).show();
+                if (chip.getChipText().equals("الاعدادي")){
+                    FirebaseDatabase.getInstance().getReference("Users").child(user.getId()).child("grade").setValue("الاعدادي");
+                }  if (chip.getChipText().equals("الابتدائي")){
+                    FirebaseDatabase.getInstance().getReference("Users").child(user.getId()).child("grade").setValue("الابتدائي");
+                }  if (chip.getChipText().equals("الثانوي")){
+                    FirebaseDatabase.getInstance().getReference("Users").child(user.getId()).child("grade").setValue("الثانوي");
+                }
+            }
+        });
 
         holder.check.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,12 +96,15 @@ public class UserVerificationAdapter extends RecyclerView.Adapter<UserVerificati
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView teacher_name;
         ImageView wrong,check;
+        ChipGroup chipGroup;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             teacher_name = itemView.findViewById(R.id.teacher_name);
             wrong = itemView.findViewById(R.id.wrong_btn);
             check = itemView.findViewById(R.id.true_btn);
+            chipGroup= itemView.findViewById(R.id.chip_group);
         }
     }
+
 }
