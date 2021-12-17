@@ -83,7 +83,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
     private ImageView themeImage;
     private TextView className, total_students, place_holder;
     private CardView addStudent, reports_open;
-    private Button submit_btn,edit_btn, excel,exportexcel;
+    private Button submit_btn,edit_btn, excel;
     private EditText student_name, reg_no,edt_search;
     private LinearLayout layout_attendance_taken;
     private RecyclerView mRecyclerview;
@@ -156,7 +156,6 @@ public class ClassDetail_Activity extends AppCompatActivity {
         submit_btn = findViewById(R.id.submit_attendance_btn);
         submit_btn.setVisibility(View.GONE);
         excel = findViewById(R.id.excel);
-        exportexcel = findViewById(R.id.exportexcel);
         readStudents();
         firebaseinit();
 
@@ -289,6 +288,16 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
 
         // click on excel to select a file
+        excel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(ClassDetail_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    selectfile();
+                } else {
+                    ActivityCompat.requestPermissions(ClassDetail_Activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
+                }
+            }
+        });
 
 
     }
