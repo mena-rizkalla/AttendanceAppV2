@@ -657,7 +657,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
                             dialogInterface.cancel();
                         }
                     })
-            .setNeutralButton("leave \n اخرج", new DialogInterface.OnClickListener() {
+            .setNeutralButton("leave \n خروج", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     finish();
@@ -786,6 +786,8 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
 
     private void DeleteClass() {
+        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Classes").child(class_Name+subject_Name).child("Student_List");
+        reference1.removeValue();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(class_Name+subject_Name);
         reference.removeValue();
         /**DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Attendance_Reports").child(date+class_Name+subject_Name);
