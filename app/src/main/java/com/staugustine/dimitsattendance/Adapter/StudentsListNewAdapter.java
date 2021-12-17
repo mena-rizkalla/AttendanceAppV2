@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.staugustine.dimitsattendance.BottomSheet.Student_Edit_Sheet;
 import com.staugustine.dimitsattendance.R;
+import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.model.Attendance_Reports;
 import com.staugustine.dimitsattendance.model.Attendance_Students_List;
 import com.staugustine.dimitsattendance.model.Students_List;
@@ -201,7 +202,7 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
                 } else {
                     holder.radioButton_present.setChecked(true);
                 }
-            }else{
+            }else if (Common.holidayOrNot.equals("no")){
                     holder.radioButton_present.setChecked(true);
                     final String attendance = "Present";
                     SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit();

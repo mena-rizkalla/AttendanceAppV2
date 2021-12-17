@@ -4,4 +4,5 @@ public class Common {
     public static String currentClassName;
     public static String currentGrade;
     public static String currentUserType;
+    public static String holidayOrNot = "no";
 }

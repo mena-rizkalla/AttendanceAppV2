@@ -55,11 +55,18 @@
         <entry key="..\:/AndroidStudioProjects/NewAttendanceApp-main/app/src/main/res/menu/only_dot.xml" value="0.25416666666666665" />
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/activity_class_detail_.xml" value="0.2" />
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/activity_date_from_to.xml" value="0.25416666666666665" />
+        <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/activity_delete_attendance.xml" value="0.253125" />
+        <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/activity_grade_detail.xml" value="0.2" />
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/activity_home.xml" value="0.264" />
+        <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/activity_insert_class_.xml" value="0.23731884057971014" />
+        <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/activity_reports.xml" value="0.264" />
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/activity_student_profile.xml" value="0.264" />
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/activity_users_verification.xml" value="0.253125" />
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/bottomsheet_student_edit.xml" value="0.13677536231884058" />
+        <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/class_adapter.xml" value="0.253125" />
+        <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/delete_attendance_item.xml" value="0.23731884057971014" />
+        <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/layout_banned.xml" value="0.23731884057971014" />
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/popup_add_student.xml" value="0.25416666666666665" />
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/report_detail_adapter_item.xml" value="0.264" />
         <entry key="..\:/AttendanceAppV2/app/src/main/res/layout/reports_adapter_item.xml" value="0.25416666666666665" />

@@ -18,4 +18,12 @@
         >
 
     </item>
+    <item
+        android:id="@+id/delete"
+        android:title="DELETE ATTENDANCE"
+        android:contentDescription="search"
+        app:showAsAction="never"
+        >
+
+    </item>
 </menu>

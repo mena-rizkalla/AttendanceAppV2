@@ -42,6 +42,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.staugustine.dimitsattendance.Adapter.StudentsListNewAdapter;
 import com.staugustine.dimitsattendance.BottomSheet.Student_Edit_Sheet;
@@ -750,6 +751,27 @@ public class ClassDetail_Activity extends AppCompatActivity {
                 }
             });
 
+        }
+        if (item.getTitle().equals("DELETE ATTENDANCE")){
+            final String date = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
+            Common.holidayOrNot = "yes";
+            FirebaseDatabase.getInstance().getReference("Attendance_Reports")
+                    .child(date+Common.currentClassName).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(ClassDetail_Activity.this, "Processing...", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            FirebaseDatabase.getInstance().getReference("Classes").child(Common.currentClassName)
+                    .child("Attendance").child(date).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(ClassDetail_Activity.this, "Done !", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
