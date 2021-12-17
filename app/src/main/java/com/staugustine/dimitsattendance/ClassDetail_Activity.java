@@ -287,28 +287,9 @@ public class ClassDetail_Activity extends AppCompatActivity {
             }
         });
 
-        exportexcel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                askForPermission(Manifest.permission.READ_EXTERNAL_STORAGE, READ_EXST);
-                askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_EXST);
-                ExcelExporter.export(date, class_Name,subject_Name);
-                Toast.makeText(getApplicationContext(), Common.currentClassName,Toast.LENGTH_LONG).show();
-            }
-        });
 
         // click on excel to select a file
-        excel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ActivityCompat.checkSelfPermission(ClassDetail_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    selectfile();
-                } else {
-                    ActivityCompat.requestPermissions(ClassDetail_Activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 101);
-                }
-            }
-        });
+
 
     }
 
