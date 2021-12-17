@@ -24,9 +24,12 @@ import com.staugustine.dimitsattendance.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.staugustine.dimitsattendance.StudentProfile;
 import com.staugustine.dimitsattendance.common.Common;
+import com.staugustine.dimitsattendance.model.Attendance_Reports;
 import com.staugustine.dimitsattendance.model.Attendance_Students_List;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class Student_Edit_Sheet extends BottomSheetDialogFragment {
 
@@ -42,6 +45,7 @@ public class Student_Edit_Sheet extends BottomSheetDialogFragment {
     public CardView detail;
     private int INITIAL_DAYS_OFF = 0;
     private int INITIAL_DAYS_ON = 0;
+    private List<String> classesid;
 
     public Student_Edit_Sheet(String stuName, String regNo,String uniqueId,String studentId) {
         _name = stuName;
@@ -65,21 +69,22 @@ public class Student_Edit_Sheet extends BottomSheetDialogFragment {
 
         name_student.setText(_name);
         regNo_student.setText(_regNo);
+        classesid = new ArrayList<>();
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /**DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Student_List").child(_name+_regNo);
-                HashMap<String,Object> hashMap = new HashMap<>();
-                hashMap.put("name_student",name_student.getText().toString());
-                hashMap.put("regNo_student",regNo_student.getText().toString());
-                hashMap.put("mobileNo_student",mobNo_student.getText().toString());
-                reference.updateChildren(hashMap);**/
+                 HashMap<String,Object> hashMap = new HashMap<>();
+                 hashMap.put("name_student",name_student.getText().toString());
+                 hashMap.put("regNo_student",regNo_student.getText().toString());
+                 hashMap.put("mobileNo_student",mobNo_student.getText().toString());
+                 reference.updateChildren(hashMap);**/
                 Toast.makeText(getContext(),"Updated",Toast.LENGTH_SHORT).show();
             }
         });
 
-        
+
         detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,8 +103,30 @@ public class Student_Edit_Sheet extends BottomSheetDialogFragment {
             }
         });
 
+        downloadeINFO();
         downloadReport();
         return v;
+    }
+
+    private void downloadeINFO() {
+        FirebaseDatabase.getInstance().getReference("Attendance_Reports").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                classesid.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Attendance_Reports attendance_reports = dataSnapshot.getValue(Attendance_Reports.class);
+                    if (attendance_reports.getClassId().equals(Common.currentClassName)){
+                        classesid.add(attendance_reports.getDate());
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void downloadReport() {
@@ -113,7 +140,7 @@ public class Student_Edit_Sheet extends BottomSheetDialogFragment {
                         if (snapshot.exists()) {
 
                             int TotalDays = (int) snapshot.getChildrenCount();
-                            totalDays.setText(""+TotalDays);
+                            totalDays.setText(""+classesid.size());
                             // for each item under the reference "attendance" do the following :
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
@@ -129,7 +156,7 @@ public class Student_Edit_Sheet extends BottomSheetDialogFragment {
                                     assert list != null;
                                     // download only the days off for this student
                                     if (list.getUnique_ID().equals(_uniqueId)
-                                            && list.getAttendance().equals("Absent")) {
+                                            && list.getAttendance().equals("Absent") && classesid.contains(list.getDate())) {
 
                                         // add their value to 0 and setting the TextView of the days off
                                         INITIAL_DAYS_OFF += 1;
@@ -137,7 +164,7 @@ public class Student_Edit_Sheet extends BottomSheetDialogFragment {
 
 
                                     }else if (list.getUnique_ID().equals(_uniqueId)
-                                            && list.getAttendance().equals("Present")){
+                                            && list.getAttendance().equals("Present") && classesid.contains(list.getDate())){
                                         INITIAL_DAYS_ON +=1;
                                         totalDaysOn.setText(""+INITIAL_DAYS_ON);
                                     }
@@ -156,6 +183,4 @@ public class Student_Edit_Sheet extends BottomSheetDialogFragment {
                     }
                 });
     }
-
-
 }

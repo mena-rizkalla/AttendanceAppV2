@@ -656,7 +656,13 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
                             dialogInterface.cancel();
                         }
-                    });
+                    })
+            .setNeutralButton("leave \n اخرج", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finish();
+                }
+            });
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
         }else {
