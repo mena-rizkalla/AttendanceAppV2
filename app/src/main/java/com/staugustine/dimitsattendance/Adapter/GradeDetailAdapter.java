@@ -14,10 +14,8 @@ import androidx.cardview.widget.CardView;
 import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.staugustine.dimitsattendance.GradeDetailActivity;
-import com.staugustine.dimitsattendance.MainActivity;
+import com.staugustine.dimitsattendance.ui.main.MainActivity;
 import com.staugustine.dimitsattendance.R;
-import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.model.Grade_Names;
 
 import java.util.List;

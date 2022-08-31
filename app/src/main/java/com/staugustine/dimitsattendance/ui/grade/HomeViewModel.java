@@ -39,7 +39,6 @@ public class HomeViewModel extends ViewModel implements IGradeCallbackListener {
         if (gradeNamesMutableLiveData == null) {
             gradeNamesMutableLiveData = new MutableLiveData<>();
             getAvailableGrades();
-            getAvailableGrades();
         }
         return gradeNamesMutableLiveData;
     }

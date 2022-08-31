@@ -45,7 +45,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.staugustine.dimitsattendance.Adapter.StudentsListNewAdapter;
-import com.staugustine.dimitsattendance.BottomSheet.Student_Edit_Sheet;
 import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.model.Attendance_Reports;
 import com.staugustine.dimitsattendance.model.Attendance_Students_List;
@@ -56,6 +55,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.staugustine.dimitsattendance.ui.main.MainActivity;
 import com.yarolegovich.lovelydialog.LovelyCustomDialog;
 
 import java.io.FileNotFoundException;
@@ -792,7 +792,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
         reference.removeValue();
         /**DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Attendance_Reports").child(date+class_Name+subject_Name);
         reference1.removeValue();**/
-        Intent intent = new Intent(ClassDetail_Activity.this,MainActivity.class);
+        Intent intent = new Intent(ClassDetail_Activity.this, MainActivity.class);
         startActivity(intent);
         Toast.makeText(ClassDetail_Activity.this,"Class Deleted",Toast.LENGTH_SHORT).show();
     }
