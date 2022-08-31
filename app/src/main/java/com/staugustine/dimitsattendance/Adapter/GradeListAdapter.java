@@ -8,18 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.staugustine.dimitsattendance.ClassDetail_Activity;
-import com.staugustine.dimitsattendance.GradeDetailActivity;
+import com.staugustine.dimitsattendance.ui.gradeDetail.GradeDetailActivity;
 import com.staugustine.dimitsattendance.R;
 import com.staugustine.dimitsattendance.common.Common;
-import com.staugustine.dimitsattendance.model.Class_Names;
 import com.staugustine.dimitsattendance.model.Grade_Names;
 
 import java.util.List;

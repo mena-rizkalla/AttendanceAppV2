@@ -32,7 +32,6 @@ import java.util.Objects;
 public class HomeActivity extends AppCompatActivity {
 
     ActivityHomeBinding binding;
-    String gradeType;
     BottomAppBar bottomAppBar;
     FloatingActionButton fab_main;
     RecyclerView recyclerView;

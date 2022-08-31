@@ -49,6 +49,7 @@ public class HomeViewModel extends ViewModel implements IGradeCallbackListener {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        gradeNamesList.clear();
                         if (snapshot.exists()) {
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                 Grade_Names gradeNames = dataSnapshot.getValue(Grade_Names.class);

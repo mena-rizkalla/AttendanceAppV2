@@ -1,10 +1,12 @@
-package com.staugustine.dimitsattendance;
+package com.staugustine.dimitsattendance.ui.gradeDetail;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -30,7 +32,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.staugustine.dimitsattendance.Adapter.GradeDetailAdapter;
-import com.staugustine.dimitsattendance.common.Common;
+import com.staugustine.dimitsattendance.ExportGrade;
+import com.staugustine.dimitsattendance.InsertGradeDetailActivity;
+import com.staugustine.dimitsattendance.R;
 import com.staugustine.dimitsattendance.model.Grade_Names;
 
 import java.text.SimpleDateFormat;
@@ -48,20 +52,20 @@ public class GradeDetailActivity extends AppCompatActivity {
     Button exportGrade;
     RecyclerView recyclerView;
     TextView sample;
-    List<Grade_Names> gradeNamesList;
-
     String gradeName;
     String room_ID;
 
     private int year, month, day;
 
     GradeDetailAdapter gradeListNewAdapter;
+    GradeDetailViewModel gradeDetailViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grade_detail);
 
+        gradeDetailViewModel = ViewModelProviders.of(this).get(GradeDetailViewModel.class);
         final String theme = getIntent().getStringExtra("theme");
         gradeName = getIntent().getStringExtra("gradeName");
         room_ID = getIntent().getStringExtra("graderoom_ID");
@@ -80,29 +84,26 @@ public class GradeDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         sample = findViewById(R.id.classes_sample);
-        recyclerView = findViewById(R.id.recyclerView_main);
 
+        recyclerView = findViewById(R.id.recyclerView_main);
         recyclerView.setHasFixedSize(true);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
-
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        gradeNamesList = new ArrayList<>();
-        gradeListNewAdapter = new GradeDetailAdapter(GradeDetailActivity.this,gradeNamesList);
-        recyclerView.setAdapter(gradeListNewAdapter);
 
         Toast.makeText(GradeDetailActivity.this,gradeName,Toast.LENGTH_SHORT).show();
-        readGradeDetail();
+
+        gradeDetailViewModel.getGradeDetailNames(gradeName).observe(this , gradeNames -> {
+            gradeListNewAdapter = new GradeDetailAdapter(GradeDetailActivity.this,gradeNames);
+            recyclerView.setAdapter(gradeListNewAdapter);
+
+        });
         exportGrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 askForPermission(Manifest.permission.READ_EXTERNAL_STORAGE, READ_EXST);
                 askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_EXST);
                 selectDate();
-
             }
         });
     }
@@ -124,12 +125,8 @@ public class GradeDetailActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(GradeDetailActivity.this,
                         new String[]{permission}, requestCode);
             }
-        } else {
-//            Toast.makeText(this, permission + " is already granted.",
-//                    Toast.LENGTH_SHORT).show();
         }
     }
-
 
     @Override
     protected Dialog onCreateDialog(int id) {
@@ -161,24 +158,4 @@ public class GradeDetailActivity extends AppCompatActivity {
 
                 }
             };
-
-    private void readGradeDetail() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Grade").child(gradeName).child("GradeDetail");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                gradeNamesList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Grade_Names gradeNames = dataSnapshot.getValue(Grade_Names.class);
-                    gradeNamesList.add(gradeNames);
-                }
-                gradeListNewAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 }
