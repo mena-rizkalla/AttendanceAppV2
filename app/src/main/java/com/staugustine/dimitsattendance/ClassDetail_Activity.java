@@ -532,6 +532,11 @@ public class ClassDetail_Activity extends AppCompatActivity {
         progressDialog.dismiss();
         lovelyCustomDialog.dismiss();
 
+        final String date = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
+        FirebaseDatabase.getInstance().getReference().child("Attendance_Reports").child(date + class_Name + subject_Name).removeValue();
+        submit_btn.setVisibility(View.VISIBLE);
+        edit_btn.setVisibility(View.INVISIBLE);
+
     }
 
     public boolean isValid() {
