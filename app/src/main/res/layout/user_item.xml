@@ -15,7 +15,7 @@
 
         <ImageView
             android:id="@+id/student_img"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="5dp"
@@ -28,7 +28,6 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/student_img"
             android:fontFamily="sans-serif-black"
@@ -54,37 +53,26 @@
             android:layout_toLeftOf="@+id/wrong_btn"
             android:src="@drawable/check" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group"
+        <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/teacher_name"
             android:layout_toStartOf="@+id/true_btn"
-            android:layout_toEndOf="@+id/student_img"
-            app:singleSelection="true">
+            android:layout_toEndOf="@+id/student_img">
 
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Filter"
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="الاعدادي"
-                app:rippleColor="@android:color/holo_orange_dark" />
 
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="الابتدائي"
-                app:rippleColor="@android:color/holo_orange_dark" />
+                app:singleSelection="true">
 
-            <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="الثانوي"
-                app:rippleColor="@android:color/holo_orange_dark" />
+            </com.google.android.material.chip.ChipGroup>
 
-        </com.google.android.material.chip.ChipGroup>
+
+        </HorizontalScrollView>
+
 
 
 

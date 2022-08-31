@@ -1,5 +1,6 @@
 package com.staugustine.dimitsattendance.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.staugustine.dimitsattendance.R;
+import com.staugustine.dimitsattendance.UsersVerification;
 import com.staugustine.dimitsattendance.model.User;
 
 import java.util.ArrayList;
@@ -44,21 +49,18 @@ public class UserVerificationAdapter extends RecyclerView.Adapter<UserVerificati
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.addChips();
         User user = list.get(position);
         holder.teacher_name.setText(user.getUsername());
+
         holder.chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(ChipGroup group, int checkedId) {
                 Chip chip = group.findViewById(checkedId);
+
                 if (chip != null)
-                    Toast.makeText(context, "Chip is " + chip.getChipText()+chip.getId(), Toast.LENGTH_SHORT).show();
-                if (chip.getChipText().equals("الاعدادي")){
-                    FirebaseDatabase.getInstance().getReference("Users").child(user.getId()).child("grade").setValue("الاعدادي");
-                }  if (chip.getChipText().equals("الابتدائي")){
-                    FirebaseDatabase.getInstance().getReference("Users").child(user.getId()).child("grade").setValue("الابتدائي");
-                }  if (chip.getChipText().equals("الثانوي")){
-                    FirebaseDatabase.getInstance().getReference("Users").child(user.getId()).child("grade").setValue("الثانوي");
-                }
+                    FirebaseDatabase.getInstance().getReference("Users").child(user.getId()).child("grade").setValue(chip.getChipText());
+
             }
         });
 
@@ -105,6 +107,32 @@ public class UserVerificationAdapter extends RecyclerView.Adapter<UserVerificati
             check = itemView.findViewById(R.id.true_btn);
             chipGroup= itemView.findViewById(R.id.chip_group);
         }
+
+        private void addChips(){
+            FirebaseDatabase.getInstance().getReference("Grade").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()){
+                        for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                            Chip chip = new Chip(context);
+                            chip.setText(dataSnapshot.getKey());
+                            chip.setCheckable(true);
+                            chip.setTextColor(context.getResources().getColor(R.color.white));
+                            chip.setTextAppearance(R.style.TextAppearance_Design_HelperText);
+                            chipGroup.addView(chip);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
     }
+
+
 
 }
