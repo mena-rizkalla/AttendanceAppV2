@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab_main;
     RecyclerView recyclerView;
     List<Class_Names> classNamesList;
-    private MainViewModel mainViewModel;
     ClassListNewAdapter classListNewAdapter;
     ActivityMainBinding binding;
 
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         getWindow().setEnterTransition(null);
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         room_ID = getIntent().getStringExtra("gradeDetailroom_ID");
 
         bottomAppBar = binding.bottomAppBar;

@@ -113,10 +113,6 @@ public class HomeViewModel extends ViewModel implements IGradeCallbackListener {
                 });
     }
 
-    public MutableLiveData<String> getMessageError() {
-        return messageError;
-    }
-
     @Override
     public void onGradeLoadSuccess(List<Grade_Names> grade_list) {
         gradeNamesMutableLiveData.setValue(grade_list);

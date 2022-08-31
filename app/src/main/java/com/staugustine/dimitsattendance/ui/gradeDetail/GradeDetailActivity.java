@@ -1,11 +1,10 @@
 package com.staugustine.dimitsattendance.ui.gradeDetail;
 
-import androidx.annotation.NonNull;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,30 +17,18 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.staugustine.dimitsattendance.Adapter.GradeDetailAdapter;
 import com.staugustine.dimitsattendance.ExportGrade;
 import com.staugustine.dimitsattendance.InsertGradeDetailActivity;
-import com.staugustine.dimitsattendance.R;
-import com.staugustine.dimitsattendance.model.Grade_Names;
-
+import com.staugustine.dimitsattendance.databinding.ActivityGradeDetailBinding;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class GradeDetailActivity extends AppCompatActivity {
 
@@ -51,7 +38,6 @@ public class GradeDetailActivity extends AppCompatActivity {
     FloatingActionButton fab_main;
     Button exportGrade;
     RecyclerView recyclerView;
-    TextView sample;
     String gradeName;
     String room_ID;
 
@@ -59,52 +45,47 @@ public class GradeDetailActivity extends AppCompatActivity {
 
     GradeDetailAdapter gradeListNewAdapter;
     GradeDetailViewModel gradeDetailViewModel;
+    ActivityGradeDetailBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grade_detail);
+        binding = ActivityGradeDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         gradeDetailViewModel = ViewModelProviders.of(this).get(GradeDetailViewModel.class);
-        final String theme = getIntent().getStringExtra("theme");
         gradeName = getIntent().getStringExtra("gradeName");
         room_ID = getIntent().getStringExtra("graderoom_ID");
 
-        Calendar calendar= Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR)+1;
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR) + 1;
 
-        exportGrade = findViewById(R.id.exportGrade);
-        bottomAppBar = findViewById(R.id.bottomAppBar);
-        fab_main = findViewById(R.id.fab_main);
-        fab_main.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(GradeDetailActivity.this, InsertGradeDetailActivity.class);
-                intent.putExtra("gradeName", gradeName);
-                startActivity(intent);
-            }
-        });
-        sample = findViewById(R.id.classes_sample);
+        exportGrade = binding.exportGrade;
+        bottomAppBar = binding.bottomAppBar;
+        fab_main = binding.fabMain;
 
-        recyclerView = findViewById(R.id.recyclerView_main);
+        recyclerView = binding.recyclerViewMain;
         recyclerView.setHasFixedSize(true);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
 
-        Toast.makeText(GradeDetailActivity.this,gradeName,Toast.LENGTH_SHORT).show();
+        Toast.makeText(GradeDetailActivity.this, gradeName, Toast.LENGTH_SHORT).show();
 
-        gradeDetailViewModel.getGradeDetailNames(gradeName).observe(this , gradeNames -> {
-            gradeListNewAdapter = new GradeDetailAdapter(GradeDetailActivity.this,gradeNames);
+        gradeDetailViewModel.getGradeDetailNames(gradeName).observe(this, gradeNames -> {
+            gradeListNewAdapter = new GradeDetailAdapter(GradeDetailActivity.this, gradeNames);
             recyclerView.setAdapter(gradeListNewAdapter);
 
         });
-        exportGrade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                askForPermission(Manifest.permission.READ_EXTERNAL_STORAGE, READ_EXST);
-                askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_EXST);
-                selectDate();
-            }
+
+        exportGrade.setOnClickListener(view -> {
+            askForPermission(Manifest.permission.READ_EXTERNAL_STORAGE, READ_EXST);
+            askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_EXST);
+            selectDate();
+        });
+        fab_main.setOnClickListener(view -> {
+            Intent intent = new Intent(GradeDetailActivity.this, InsertGradeDetailActivity.class);
+            intent.putExtra("gradeName", gradeName);
+            startActivity(intent);
         });
     }
 
@@ -140,7 +121,7 @@ public class GradeDetailActivity extends AppCompatActivity {
         showDialog(1);
     }
 
-    private DatePickerDialog.OnDateSetListener myDateListenerFrom = new
+    private final DatePickerDialog.OnDateSetListener myDateListenerFrom = new
             DatePickerDialog.OnDateSetListener() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
@@ -148,13 +129,13 @@ public class GradeDetailActivity extends AppCompatActivity {
                                       int arg1, int arg2, int arg3) {
                     // store the selected dates in these variables
                     year = arg1 - 1900;
-                    month = arg2 ;
+                    month = arg2;
                     day = arg3;
                     //String date = day + "-" + month + "-" + year;
-                    Date date1 = new Date(year,month,day);
+                    Date date1 = new Date(year, month, day);
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
                     String date2 = dateFormat.format(date1);
-                    ExportGrade.export(gradeName,date2);
+                    ExportGrade.export(gradeName, date2);
 
                 }
             };
