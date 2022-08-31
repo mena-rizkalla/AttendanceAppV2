@@ -329,6 +329,12 @@ public class ClassDetail_Activity extends AppCompatActivity {
                                 child(class_Name + subject_Name).child("Student_List").updateChildren(parentMap).addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
                                         dialog.dismiss();
+                                        final String date = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
+                                        FirebaseDatabase.getInstance().getReference().child("Attendance_Reports").child(date + class_Name + subject_Name).removeValue();
+                                        submit_btn.setVisibility(View.VISIBLE);
+                                        edit_btn.setVisibility(View.INVISIBLE);
+                                        binding.placeholderDetail.setVisibility(View.INVISIBLE);
+
                                         Toast.makeText(ClassDetail_Activity.this, "Uploaded Successfully", Toast.LENGTH_LONG).show();
                                     } else {
                                         dialog.dismiss();
@@ -536,6 +542,7 @@ public class ClassDetail_Activity extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference().child("Attendance_Reports").child(date + class_Name + subject_Name).removeValue();
         submit_btn.setVisibility(View.VISIBLE);
         edit_btn.setVisibility(View.INVISIBLE);
+        binding.placeholderDetail.setVisibility(View.INVISIBLE);
 
     }
 
