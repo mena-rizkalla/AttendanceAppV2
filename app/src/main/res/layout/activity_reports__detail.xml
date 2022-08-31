@@ -27,11 +27,7 @@
             android:textStyle="bold"
             android:layout_gravity="center"/>
 
-        <Button
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:text="Export excel"
-            android:id="@+id/exportexcel"/>
+
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
@@ -64,6 +60,13 @@
             android:text="Sample Subject"
             android:textColor="@color/text_color_dark"
             android:textSize="16dp"/>
+
+
+
+
+
+
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,12 +89,25 @@
             android:text="Sample className"
             android:textColor="@color/text_color_dark"
             android:textSize="16dp"/>
+
+
     </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
+
+            <Button
+                android:id="@+id/exportexcel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Export excel"
+                android:layout_gravity="right"/>
+
+            <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_reports_detail"
         android:focusable="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

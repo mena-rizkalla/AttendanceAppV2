@@ -17,7 +17,7 @@
             android:id="@+id/student_name_report_detail_adapter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Akshay Kumar"
+            android:text="Muhammed Salah"
             android:layout_marginLeft="10dp"
             android:textColor="@color/text_color_dark"
             android:textSize="18dp"/>
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="9633117104030"/>
+            android:text="011255032544"/>
     </LinearLayout>
 
     <RelativeLayout
