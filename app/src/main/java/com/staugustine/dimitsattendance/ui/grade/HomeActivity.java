@@ -57,6 +57,11 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        verify_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, UsersVerification.class);
+            startActivity(intent);
+        });
+
         recyclerView = binding.recyclerViewMain;
         recyclerView.setHasFixedSize(true);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
@@ -70,30 +75,11 @@ public class HomeActivity extends AppCompatActivity {
                 recyclerView.setAdapter(gradeListNewAdapter);
             });
         } else {
-            FirebaseDatabase.getInstance().getReference("Users")
-                    .child(firebaseUser.getUid())
-                    .child("grade")
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            gradeType = Objects.requireNonNull(snapshot.getValue()).toString();
-                            homeViewModel.getGradeNamesForUser(gradeType).observe(HomeActivity.this , gradeNames -> {
-                                gradeListNewAdapter = new GradeListAdapter(HomeActivity.this, gradeNames);
-                                recyclerView.setAdapter(gradeListNewAdapter);
-                            });
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Log.d("HomeActivity", "onCancelled: " + error.getMessage());
-                        }
-                    });
-
+            homeViewModel.getGradeNamesForUser().observe(this,gradeNames ->{
+                gradeListNewAdapter = new GradeListAdapter(HomeActivity.this, gradeNames);
+                recyclerView.setAdapter(gradeListNewAdapter);
+            });
         }
-        verify_btn.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, UsersVerification.class);
-            startActivity(intent);
-        });
     }
 
 
