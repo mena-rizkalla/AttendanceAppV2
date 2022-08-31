@@ -61,9 +61,12 @@ dependencies {
    //implementation 'org.apache.poi:poi-ooxml:3.12'
     //implementation 'com.fasterxml:aalto-xml:1.0.0'
 
-    compile group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6'
+    implementation group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6'
 
     implementation files('libs/poi-3.12-android-a.jar')
     implementation 'com.android.support:multidex:1.0.3'
+
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation "android.arch.lifecycle:viewmodel:1.1.1"
 
 }

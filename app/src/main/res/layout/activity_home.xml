@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/MainBack"
-    tools:context=".HomeActivity">
+    tools:context=".ui.grade.HomeActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -38,7 +38,6 @@
                 android:layout_marginRight="8dp" />
 
             <TextView
-                android:visibility="invisible"
                 android:id="@+id/verify_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,7 +52,8 @@
                 android:text="Verify Users"
                 android:textColor="@color/green"
                 android:textSize="14dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

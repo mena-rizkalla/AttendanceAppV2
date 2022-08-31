@@ -1,7 +1,8 @@
-package com.staugustine.dimitsattendance;
+package com.staugustine.dimitsattendance.ui.grade;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -11,7 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,12 +22,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.staugustine.dimitsattendance.Adapter.GradeListAdapter;
+import com.staugustine.dimitsattendance.Insert_Grade_Activity;
+import com.staugustine.dimitsattendance.UsersVerification;
 import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.databinding.ActivityHomeBinding;
-import com.staugustine.dimitsattendance.model.Grade_Names;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
@@ -38,16 +37,16 @@ public class HomeActivity extends AppCompatActivity {
     FloatingActionButton fab_main;
     RecyclerView recyclerView;
     TextView verify_btn;
-    List<Grade_Names> gradeNamesList;
     GradeListAdapter gradeListNewAdapter;
     FirebaseUser firebaseUser;
+    private HomeViewModel homeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         bottomAppBar = binding.bottomAppBar;
         verify_btn = binding.verifyBtn;
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -58,19 +57,18 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
         recyclerView = binding.recyclerViewMain;
         recyclerView.setHasFixedSize(true);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        gradeNamesList = new ArrayList<>();
-        gradeListNewAdapter = new GradeListAdapter(HomeActivity.this, gradeNamesList);
-        recyclerView.setAdapter(gradeListNewAdapter);
 
 
         if (Common.currentUserType.equals("admin")) {
             verify_btn.setVisibility(View.VISIBLE);
-            readGradeForAdmin();
+            homeViewModel.getGradeNamesForAdmin().observe(this,gradeNames ->{
+                gradeListNewAdapter = new GradeListAdapter(HomeActivity.this, gradeNames);
+                recyclerView.setAdapter(gradeListNewAdapter);
+            });
         } else {
             FirebaseDatabase.getInstance().getReference("Users")
                     .child(firebaseUser.getUid())
@@ -79,7 +77,10 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             gradeType = Objects.requireNonNull(snapshot.getValue()).toString();
-                            readGradeForUser(gradeType);
+                            homeViewModel.getGradeNamesForUser(gradeType).observe(HomeActivity.this , gradeNames -> {
+                                gradeListNewAdapter = new GradeListAdapter(HomeActivity.this, gradeNames);
+                                recyclerView.setAdapter(gradeListNewAdapter);
+                            });
                         }
 
                         @Override
@@ -95,51 +96,8 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void readGradeForUser(String gradeType) {
-        FirebaseDatabase.getInstance().getReference("Grade")
-                .child(gradeType)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            gradeNamesList.clear();
-                            Grade_Names gradeNames = snapshot.getValue(Grade_Names.class);
-                            gradeNamesList.add(gradeNames);
-                            gradeListNewAdapter = new GradeListAdapter(HomeActivity.this, gradeNamesList);
-                            recyclerView.setAdapter(gradeListNewAdapter);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Log.d("HomeActivity", "onCancelled: " + error.getMessage());
-                        Toast.makeText(HomeActivity.this, "" + error.getMessage()
-                                , Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
 
 
-    private void readGradeForAdmin() {
-        FirebaseDatabase.getInstance().getReference("Grade")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            gradeNamesList.clear();
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                Grade_Names gradeNames = dataSnapshot.getValue(Grade_Names.class);
-                                gradeNamesList.add(gradeNames);
-                            }
-                            gradeListNewAdapter = new GradeListAdapter(HomeActivity.this, gradeNamesList);
-                            recyclerView.setAdapter(gradeListNewAdapter);
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
-    }
 }
