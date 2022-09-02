@@ -1,8 +1,6 @@
 package com.staugustine.dimitsattendance.Adapter;
 
-import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
@@ -38,10 +36,10 @@ import java.util.Locale;
 
 public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNewAdapter.ViewHolder> {
 
-    private Activity mActivity;
     Context mContext;
     List<Students_List> students_lists;
-    String stuID;
+    final String date = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
+
 
     public StudentsListNewAdapter(Context mContext, List<Students_List> students_lists) {
         this.mContext = mContext;
@@ -62,166 +60,157 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
         holder.student_name.setText(students_list.getName_student());
         holder.student_regNo.setText(students_list.getRegNo_student());
 
-        checkAttendance(holder,students_list);
+        checkAttendance(holder, students_list);
 
 
-        final String date = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Attendance_Reports").child(date+students_list.getClass_id());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+        FirebaseDatabase.getInstance().getReference("Attendance_Reports")
+                .child(date + students_list.getClass_id())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    if (snapshot.exists()){
-                        Attendance_Reports attendance_reports = snapshot.getValue(Attendance_Reports.class);
-                        if(attendance_reports.getDate().equals(date))
-                            holder.radioGroup.setVisibility(View.GONE);
-                    }else {
-                        holder.radioGroup.setVisibility(View.VISIBLE);
+                        if (snapshot.exists()) {
+                            Attendance_Reports attendance_reports = snapshot.getValue(Attendance_Reports.class);
+                            assert attendance_reports != null;
+                            if (attendance_reports.getDate().equals(date))
+                                holder.radioGroup.setVisibility(View.GONE);
+                        } else {
+                            holder.radioGroup.setVisibility(View.VISIBLE);
 
-                }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+        if (holder.radioButton_present.isChecked()) {
+            if (!students_lists.isEmpty()) {
+                final String attendance = "Present";
+
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student(), attendance);
+                editor.apply();
+
+                HashMap<Object, String> hashMap = new HashMap<>();
+                String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student() + students_list.getName_student();
+                hashMap.put("studentName", students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student());
+                hashMap.put("attendance", attendance);
+                hashMap.put("studentRegNo", students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student());
+                hashMap.put("classID", students_lists.get(holder.getAbsoluteAdapterPosition()).getClass_id());
+                hashMap.put("date", date);
+                hashMap.put("unique_ID", students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student() + students_list.getClass_id());
+
+                FirebaseDatabase.getInstance().getReference("Classes")
+                        .child(students_list.getClass_id())
+                        .child("Attendance").child(date)
+                        .child(uniqueId).setValue(hashMap);
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-        if (holder.radioButton_present.isChecked()){
-            final String attendance = "Present";
-            SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit();
-            editor.putString(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student(), attendance);
-            editor.apply();
-
-             reference = FirebaseDatabase.getInstance().getReference("Classes").child(students_list.getClass_id()).child("Attendance");
-            HashMap<Object,String> hashMap = new HashMap<>();
-            String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getName_student();
-            hashMap.put("studentName",students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student());
-            hashMap.put("attendance",attendance);
-            //hashMap.put("mobNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student());
-            hashMap.put("studentRegNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student());
-            hashMap.put("classID",students_lists.get(holder.getAbsoluteAdapterPosition()).getClass_id());
-            //error on date
-            hashMap.put("date",date);
-            hashMap.put("unique_ID",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id());
-            reference.child(date).child(uniqueId).setValue(hashMap);
-            // reference.child(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id()).setValue(hashMap);
 
         }
-        holder.radioButton_present.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        holder.radioButton_present.setOnClickListener(view -> {
+            if (!students_lists.isEmpty()) {
                 final String attendance = "Present";
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit();
+
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
                 editor.putString(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student(), attendance);
                 editor.apply();
 
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(students_list.getClass_id()).child("Attendance");
-                        HashMap<Object,String> hashMap = new HashMap<>();
-                        String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getName_student();
-                        hashMap.put("studentName",students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student());
-                        hashMap.put("attendance",attendance);
-                        //hashMap.put("mobNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student());
-                        hashMap.put("studentRegNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student());
-                        hashMap.put("classID",students_lists.get(holder.getAbsoluteAdapterPosition()).getClass_id());
-                        //error on date
-                        hashMap.put("date",date);
-                        hashMap.put("unique_ID",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id());
-                        reference.child(date).child(uniqueId).setValue(hashMap);
-                       // reference.child(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id()).setValue(hashMap);
 
+                HashMap<Object, String> hashMap = new HashMap<>();
+                String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student() + students_list.getName_student();
+                hashMap.put("studentName", students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student());
+                hashMap.put("attendance", attendance);
+                hashMap.put("studentRegNo", students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student());
+                hashMap.put("classID", students_lists.get(holder.getAbsoluteAdapterPosition()).getClass_id());
+                hashMap.put("date", date);
+                hashMap.put("unique_ID", students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student() + students_list.getClass_id());
+
+                FirebaseDatabase.getInstance().getReference("Classes")
+                        .child(students_list.getClass_id())
+                        .child("Attendance").child(date)
+                        .child(uniqueId).setValue(hashMap);
             }
+
         });
 
 
-        holder.radioButton_absent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        holder.radioButton_absent.setOnClickListener(view -> {
+            if (!students_lists.isEmpty()) {
                 final String attendance = "Absent";
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit();
+
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
                 editor.putString(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student(), attendance);
                 editor.apply();
 
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(students_list.getClass_id()).child("Attendance");
-                        HashMap<Object,String> hashMap = new HashMap<>();
-                        String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getName_student();
-                        hashMap.put("studentName",students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student());
-                        hashMap.put("attendance",attendance);
-                        //hashMap.put("mobNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student());
-                        hashMap.put("studentRegNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student());
-                        hashMap.put("classID",students_lists.get(holder.getAbsoluteAdapterPosition()).getClass_id());
-                        // error on date
-                        hashMap.put("date",date);
-                        hashMap.put("unique_ID",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id());
-                        reference.child(date).child(uniqueId).setValue(hashMap);
-                       // reference.child(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id()).setValue(hashMap);
+                HashMap<Object, String> hashMap = new HashMap<>();
+                String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student() + students_list.getName_student();
+                hashMap.put("studentName", students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student());
+                hashMap.put("attendance", attendance);
+                hashMap.put("studentRegNo", students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student());
+                hashMap.put("classID", students_lists.get(holder.getAbsoluteAdapterPosition()).getClass_id());
+                hashMap.put("date", date);
+                hashMap.put("unique_ID", students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student() + students_list.getClass_id());
 
+                FirebaseDatabase.getInstance().getReference("Classes")
+                        .child(students_list.getClass_id()).child("Attendance")
+                        .child(date).child(uniqueId).setValue(hashMap);
             }
+
         });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String studentId = students_lists.get(holder.getAbsoluteAdapterPosition()).getId();
-               String stuName = students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student();
-               String regNo = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student();
-               String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id();
-                Student_Edit_Sheet student_edit_sheet = new Student_Edit_Sheet(stuName, regNo,uniqueId,studentId);
-                student_edit_sheet.setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetTheme);
-                student_edit_sheet.show(((FragmentActivity)view.getContext()).getSupportFragmentManager(), "BottomSheet");
-            }
+        holder.itemView.setOnClickListener(view -> {
+            String studentId = students_lists.get(holder.getAbsoluteAdapterPosition()).getId();
+            String stuName = students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student();
+            String regNo = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student();
+            String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student() + students_list.getClass_id();
+            Student_Edit_Sheet student_edit_sheet = new Student_Edit_Sheet(stuName, regNo, uniqueId, studentId);
+            student_edit_sheet.setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetTheme);
+            student_edit_sheet.show(((FragmentActivity) view.getContext()).getSupportFragmentManager(), "BottomSheet");
         });
 
-       /**SharedPreferences preferences = getDefaultSharedPreferences(mContext);
-        stuID = students_list.getRegNo_student();
-        String value = preferences.getString(stuID, null);
-        if (value==null){
-
-        }else {
-            if (value.equals("Present")) {
-                holder.radioButton_present.setChecked(true);
-            } else {
-                holder.radioButton_absent.setChecked(true);
-            }
-        }**/
 
     }
 
     private void checkAttendance(ViewHolder holder, Students_List students_list) {
-        final String date = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
-        String child2 = students_list.getRegNo_student()+students_list.getName_student();
+        String child2 = students_list.getRegNo_student() + students_list.getName_student();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(students_list.getClass_id()).child("Attendance").child(date).child(child2);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
                     Attendance_Students_List attendanceStudentsList = snapshot.getValue(Attendance_Students_List.class);
-                if (attendanceStudentsList.getAttendance().equals("Absent")) {
-                    holder.radioButton_absent.setChecked(true);
-                } else {
-                    holder.radioButton_present.setChecked(true);
-                }
-            }else if (Common.holidayOrNot.equals("no")){
+                    assert attendanceStudentsList != null;
+                    if (attendanceStudentsList.getAttendance().equals("Absent")) {
+                        holder.radioButton_absent.setChecked(true);
+                    } else {
+                        holder.radioButton_present.setChecked(true);
+                    }
+                } else if (Common.holidayOrNot.equals("no") && !students_lists.isEmpty()) {
                     holder.radioButton_present.setChecked(true);
                     final String attendance = "Present";
-                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit();
+                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
                     editor.putString(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student(), attendance);
                     editor.apply();
 
-                    DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Classes").child(students_list.getClass_id()).child("Attendance");
-                    HashMap<Object,String> hashMap = new HashMap<>();
-                    String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getName_student();
-                    hashMap.put("studentName",students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student());
-                    hashMap.put("attendance",attendance);
-                    //hashMap.put("mobNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getMobileNo_student());
-                    hashMap.put("studentRegNo",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student());
-                    hashMap.put("classID",students_lists.get(holder.getAbsoluteAdapterPosition()).getClass_id());
-                    //error on date
-                    hashMap.put("date",date);
-                    hashMap.put("unique_ID",students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id());
-                    reference1.child(date).child(uniqueId).setValue(hashMap);
-                    // reference.child(students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student()+students_list.getClass_id()).setValue(hashMap);
+
+                    HashMap<Object, String> hashMap = new HashMap<>();
+                    String uniqueId = students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student() + students_list.getName_student();
+                    hashMap.put("studentName", students_lists.get(holder.getAbsoluteAdapterPosition()).getName_student());
+                    hashMap.put("attendance", attendance);
+                    hashMap.put("studentRegNo", students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student());
+                    hashMap.put("classID", students_lists.get(holder.getAbsoluteAdapterPosition()).getClass_id());
+                    hashMap.put("date", date);
+                    hashMap.put("unique_ID", students_lists.get(holder.getAbsoluteAdapterPosition()).getRegNo_student() + students_list.getClass_id());
+
+                    FirebaseDatabase.getInstance().getReference("Classes")
+                            .child(students_list.getClass_id()).child("Attendance")
+                            .child(date).child(uniqueId).setValue(hashMap);
+
                 }
             }
 
@@ -237,12 +226,13 @@ public class StudentsListNewAdapter extends RecyclerView.Adapter<StudentsListNew
         return students_lists.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView student_name;
         public TextView student_regNo;
         public LinearLayout layout;
         public RadioGroup radioGroup;
         public RadioButton radioButton_present, radioButton_absent;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 

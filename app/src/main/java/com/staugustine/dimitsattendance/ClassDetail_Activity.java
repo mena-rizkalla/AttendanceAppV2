@@ -570,6 +570,10 @@ public class ClassDetail_Activity extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(class_Name + subject_Name);
         reference.removeValue();
 
+        students_lists.clear();
+        adapter = new StudentsListNewAdapter(this, students_lists);
+        mRecyclerview.setAdapter(adapter);
+
         Intent intent = new Intent(ClassDetail_Activity.this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
