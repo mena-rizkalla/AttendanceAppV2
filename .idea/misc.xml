@@ -3,15 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android Projects/AttendanceAppV2/app/src/main/res/layout/activity_class_detail_.xml" value="0.176" />
         <entry key="..\:/Android Projects/AttendanceAppV2/app/src/main/res/layout/activity_home.xml" value="0.1897644927536232" />
         <entry key="..\:/Android Projects/AttendanceAppV2/app/src/main/res/layout/activity_login.xml" value="0.1897644927536232" />
         <entry key="..\:/Android Projects/AttendanceAppV2/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Android Projects/AttendanceAppV2/app/src/main/res/layout/activity_register.xml" value="0.1897644927536232" />
         <entry key="..\:/Android Projects/AttendanceAppV2/app/src/main/res/layout/activity_start.xml" value="0.1897644927536232" />
-        <entry key="..\:/Android Projects/AttendanceAppV2/app/src/main/res/layout/popup_add_student.xml" value="0.17527173913043478" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/drawable/ic_round_arrow_back_24_dark.xml" value="0.2703125" />
-        <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_admin.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_admin.xml" value="0.176" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_class_detail_.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_grade_detail.xml" value="0.264" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_home.xml" value="0.25416666666666665" />
@@ -23,7 +21,7 @@
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_register.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_reports.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_reports__detail.xml" value="0.264" />
-        <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_start.xml" value="0.25416666666666665" />
+        <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_start.xml" value="0.19356300997280146" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_student_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/activity_users_verification.xml" value="0.1852355072463768" />
         <entry key="..\:/AndroidStudioProjects/AttendanceAppV2/app/src/main/res/layout/bottomsheet_student_edit.xml" value="0.25416666666666665" />
