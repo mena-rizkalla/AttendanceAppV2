@@ -1,6 +1,5 @@
 package com.staugustine.dimitsattendance.Adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,28 +11,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.staugustine.dimitsattendance.R;
-import com.staugustine.dimitsattendance.UsersVerification;
 import com.staugustine.dimitsattendance.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserVerificationAdapter extends RecyclerView.Adapter<UserVerificationAdapter.ViewHolder> {
 
     Context context;
-    List<User> list = new ArrayList<>();
+    List<User> list;
 
-    public UserVerificationAdapter() {
-    }
 
     public UserVerificationAdapter(Context context, List<User> list) {
         this.context = context;
@@ -53,40 +46,27 @@ public class UserVerificationAdapter extends RecyclerView.Adapter<UserVerificati
         User user = list.get(position);
         holder.teacher_name.setText(user.getUsername());
 
-        holder.chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(ChipGroup group, int checkedId) {
-                Chip chip = group.findViewById(checkedId);
+        holder.chipGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            Chip chip = group.findViewById(checkedId);
 
-                if (chip != null)
-                    FirebaseDatabase.getInstance().getReference("Users").child(user.getId()).child("grade").setValue(chip.getChipText());
+            if (chip != null)
+                FirebaseDatabase.getInstance().getReference("Users")
+                        .child(user.getId()).child("grade").setValue(chip.getChipText());
 
-            }
         });
 
-        holder.check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseDatabase.getInstance().getReference("Users").child(user.getId()).child("active").setValue("1").addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(context, "Verified", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
+        holder.check.setOnClickListener(v ->
+                FirebaseDatabase.getInstance().getReference("Users")
+                        .child(user.getId()).child("active")
+                        .setValue("1").addOnSuccessListener(
+                                unused ->
+                                        Toast.makeText(context, "Verified", Toast.LENGTH_SHORT).show()));
 
-        holder.wrong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseDatabase.getInstance().getReference("Users").child(user.getId()).child("active").setValue("0").addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(context, "unverified", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
+        holder.wrong.setOnClickListener(v ->
+                FirebaseDatabase.getInstance().getReference("Users")
+                        .child(user.getId()).child("active").setValue("0")
+                        .addOnSuccessListener(unused ->
+                                Toast.makeText(context, "unverified", Toast.LENGTH_SHORT).show()));
 
     }
 
@@ -95,9 +75,9 @@ public class UserVerificationAdapter extends RecyclerView.Adapter<UserVerificati
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView teacher_name;
-        ImageView wrong,check;
+        ImageView wrong, check;
         ChipGroup chipGroup;
 
         public ViewHolder(@NonNull View itemView) {
@@ -105,15 +85,15 @@ public class UserVerificationAdapter extends RecyclerView.Adapter<UserVerificati
             teacher_name = itemView.findViewById(R.id.teacher_name);
             wrong = itemView.findViewById(R.id.wrong_btn);
             check = itemView.findViewById(R.id.true_btn);
-            chipGroup= itemView.findViewById(R.id.chip_group);
+            chipGroup = itemView.findViewById(R.id.chip_group);
         }
 
-        private void addChips(){
+        private void addChips() {
             FirebaseDatabase.getInstance().getReference("Grade").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()){
-                        for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    if (snapshot.exists()) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             Chip chip = new Chip(context);
                             chip.setText(dataSnapshot.getKey());
                             chip.setCheckable(true);
@@ -132,7 +112,6 @@ public class UserVerificationAdapter extends RecyclerView.Adapter<UserVerificati
         }
 
     }
-
 
 
 }

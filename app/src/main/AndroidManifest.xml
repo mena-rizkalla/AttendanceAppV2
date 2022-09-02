@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".UsersVerification"
+            android:name=".ui.verification.UsersVerification"
             android:exported="true" />
         <activity
             android:name=".InsertGradeDetailActivity"

@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.staugustine.dimitsattendance.Adapter.GradeListAdapter;
 import com.staugustine.dimitsattendance.Insert_Grade_Activity;
-import com.staugustine.dimitsattendance.UsersVerification;
+import com.staugustine.dimitsattendance.ui.verification.UsersVerification;
 import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.databinding.ActivityHomeBinding;
 
