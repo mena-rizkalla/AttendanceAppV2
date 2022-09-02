@@ -582,7 +582,6 @@ public class ClassDetail_Activity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         if (submit_btn.getVisibility() == View.VISIBLE) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("please click submit button to submit the attendance \n" +

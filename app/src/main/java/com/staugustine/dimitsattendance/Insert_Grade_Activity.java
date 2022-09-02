@@ -1,10 +1,12 @@
 package com.staugustine.dimitsattendance;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -13,29 +15,26 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.staugustine.dimitsattendance.databinding.ActivityAdminBinding;
+import com.staugustine.dimitsattendance.databinding.ActivityInsertGradeBinding;
 
 import java.util.HashMap;
 import java.util.Objects;
 
 public class Insert_Grade_Activity extends AppCompatActivity {
 
-    Button create_button;
-    EditText _gradeName;
-
+    private ActivityInsertGradeBinding binding;
     private  String position_bg = "1";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_insert_grade);
+        binding = ActivityInsertGradeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        Toolbar toolbar = findViewById(R.id.toolbar_insert_class);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.toolbarInsertClass);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        create_button = findViewById(R.id.button_createClass);
-        _gradeName = findViewById(R.id.grade_createClass);
-
-        create_button.setOnClickListener(new View.OnClickListener() {
+        binding.buttonCreateClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -47,30 +46,24 @@ public class Insert_Grade_Activity extends AppCompatActivity {
 
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Grade");
                     HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put("id",_gradeName.getText().toString());
-                    hashMap.put("name_grade",_gradeName.getText().toString());
+                    hashMap.put("id",binding.gradeCreateClass.getText().toString());
+                    hashMap.put("name_grade",binding.gradeCreateClass.getText().toString());
                     hashMap.put("position_bg",position_bg);
-                    reference.child(_gradeName.getText().toString()).setValue(hashMap);
+                    reference.child(binding.gradeCreateClass.getText().toString()).setValue(hashMap);
 
                     progressDialog.dismiss();
                     Toast.makeText(Insert_Grade_Activity.this, "Successfully created", Toast.LENGTH_SHORT).show();
                     finish();
 
-
-
                 }else{
                     Toast.makeText(Insert_Grade_Activity.this, "Fill all details", Toast.LENGTH_SHORT).show();
                 }
-
-                //-------
-
             }
         });
     }
 
     public boolean isValid(){
-
-        return  !_gradeName.getText().toString().isEmpty();
+        return  !binding.gradeCreateClass.getText().toString().isEmpty();
     }
 
     @Override
@@ -78,9 +71,7 @@ public class Insert_Grade_Activity extends AppCompatActivity {
         if(item.getItemId()==android.R.id.home)
         {
             finish();
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
