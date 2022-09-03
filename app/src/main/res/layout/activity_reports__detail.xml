@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".Reports_Detail_Activity">
+    tools:context=".ui.reportDetail.Reports_Detail_Activity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_reports_detail"

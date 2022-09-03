@@ -90,10 +90,6 @@ public class ExportGrade {
 //                e.printStackTrace();
 //            }
 
-
-
-
-
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes");
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -106,6 +102,7 @@ public class ExportGrade {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()){
 
                             Class_Names class_names = dataSnapshot.getValue(Class_Names.class);
+                            assert class_names != null;
                             if(class_names.getGradeType().equals(GradeName)){
                                 list.add(class_names.getGradeType());
                                 list1.add(class_names.getName_class()+class_names.getName_subject());

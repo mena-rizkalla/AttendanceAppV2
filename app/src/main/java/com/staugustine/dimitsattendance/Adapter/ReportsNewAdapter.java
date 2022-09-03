@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.staugustine.dimitsattendance.R;
-import com.staugustine.dimitsattendance.Reports_Detail_Activity;
+import com.staugustine.dimitsattendance.ui.reportDetail.Reports_Detail_Activity;
 import com.staugustine.dimitsattendance.model.Attendance_Reports;
 
 import java.util.List;

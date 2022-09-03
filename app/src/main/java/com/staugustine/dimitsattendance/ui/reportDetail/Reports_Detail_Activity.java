@@ -1,13 +1,12 @@
-package com.staugustine.dimitsattendance;
-
-import static com.staugustine.dimitsattendance.ClassDetail_Activity.READ_EXST;
-import static com.staugustine.dimitsattendance.ClassDetail_Activity.WRITE_EXST;
+package com.staugustine.dimitsattendance.ui.reportDetail;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,10 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.staugustine.dimitsattendance.Adapter.Reports_Detail_NewAdapter;
-import com.staugustine.dimitsattendance.common.Common;
+import com.staugustine.dimitsattendance.ExcelExporter;
+import com.staugustine.dimitsattendance.R;
+import com.staugustine.dimitsattendance.databinding.ActivityReportsDetailBinding;
 import com.staugustine.dimitsattendance.model.Attendance_Students_List;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,57 +34,46 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import io.realm.Realm;
-
 public class Reports_Detail_Activity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     static final Integer WRITE_EXST = 0x3;
     static final Integer READ_EXST = 0x4;
 
-    TextView subj, className, toolbar_title;
-    private Button exportexcel;
-
+    private ActivityReportsDetailBinding binding;
 
     Reports_Detail_NewAdapter reportsNewAdapter;
-    List<Attendance_Students_List> attendance_students_lists;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reports__detail);
+        binding = ActivityReportsDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
+        ReportsDetailViewModel reportsDetailViewModel = ViewModelProviders.of(this).get(ReportsDetailViewModel.class);
 
         String room_ID = getIntent().getStringExtra("ID");
         String classname = getIntent().getStringExtra("class");
         String subjName = getIntent().getStringExtra("subject");
         String date = getIntent().getStringExtra("date");
 
-        Toolbar toolbar = findViewById(R.id.toolbar_reports_detail);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.toolbarReportsDetail);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        recyclerView = findViewById(R.id.recyclerView_reports_detail);
-        subj = findViewById(R.id.subjName_report_detail);
-        className = findViewById(R.id.classname_report_detail);
-        toolbar_title = findViewById(R.id.toolbar_title);
-        toolbar_title.setText(date);
-        subj.setText(subjName);
-        className.setText(classname);
-        exportexcel = findViewById(R.id.exportexcel);
-
-        readReportsDetail(room_ID,classname,subjName,date);
-
-
+        recyclerView = binding.recyclerViewReportsDetail;
+        binding.toolbarTitle.setText(date);
+        binding.subjNameReportDetail.setText(subjName);
+        binding.classnameReportDetail.setText(classname);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        attendance_students_lists = new ArrayList<>();
 
-        reportsNewAdapter = new Reports_Detail_NewAdapter(Reports_Detail_Activity.this,attendance_students_lists);
+        reportsDetailViewModel.getStudentList(classname,subjName,date).observe(this,studentList ->{
+            reportsNewAdapter = new Reports_Detail_NewAdapter(Reports_Detail_Activity.this,studentList);
 
-        recyclerView.setAdapter(reportsNewAdapter);
+            recyclerView.setAdapter(reportsNewAdapter);
+        });
 
-        exportexcel.setOnClickListener(new View.OnClickListener() {
+        binding.exportexcel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -94,7 +83,6 @@ public class Reports_Detail_Activity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void askForPermission(String permission, Integer requestCode) {
@@ -120,29 +108,6 @@ public class Reports_Detail_Activity extends AppCompatActivity {
         }
     }
 
-
-
-    private void readReportsDetail(String room_ID, String classname, String subjName, String date) {
-        //attendance_students_lists.clear();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(classname+subjName).child("Attendance").child(date);
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Attendance_Students_List attendanceStudentsList = dataSnapshot.getValue(Attendance_Students_List.class);
-                    attendance_students_lists.add(attendanceStudentsList);
-
-                }
-                reportsNewAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.only_dot, menu);
@@ -155,7 +120,6 @@ public class Reports_Detail_Activity extends AppCompatActivity {
         {
             finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
