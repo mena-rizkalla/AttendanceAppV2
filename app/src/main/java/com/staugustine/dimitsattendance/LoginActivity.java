@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if (email.getText().toString().isEmpty() || password.getText().toString().isEmpty()) {
                 Toast.makeText(LoginActivity.this, "All fields are required ", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             } else {
                 auth.signInWithEmailAndPassword(str_email, str_password)
                         .addOnCompleteListener(LoginActivity.this, task -> {
