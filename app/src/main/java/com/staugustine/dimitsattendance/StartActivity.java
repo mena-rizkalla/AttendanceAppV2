@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.staugustine.dimitsattendance.databinding.ActivityStartBinding;
+import com.staugustine.dimitsattendance.ui.login.LoginActivity;
 
 public class StartActivity extends AppCompatActivity {
 
