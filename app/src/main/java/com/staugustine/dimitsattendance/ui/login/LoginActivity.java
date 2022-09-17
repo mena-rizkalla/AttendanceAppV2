@@ -62,11 +62,10 @@ public class LoginActivity extends AppCompatActivity {
                         loginViewModel.getMessageError(str_email, str_password).observe(this, message -> {
                             if (message.equals("BANNED")) {
                                 showBannedDialog();
-                                dialog.dismiss();
                             } else {
                                 Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
                             }
+                            dialog.dismiss();
                         });
                     }
                 });

@@ -1,11 +1,8 @@
 package com.staugustine.dimitsattendance.ui.reportDetail;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,22 +13,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.staugustine.dimitsattendance.Adapter.Reports_Detail_NewAdapter;
-import com.staugustine.dimitsattendance.ExcelExporter;
+import com.staugustine.dimitsattendance.excel.ExcelExporter;
 import com.staugustine.dimitsattendance.R;
 import com.staugustine.dimitsattendance.databinding.ActivityReportsDetailBinding;
-import com.staugustine.dimitsattendance.model.Attendance_Students_List;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Reports_Detail_Activity extends AppCompatActivity {
