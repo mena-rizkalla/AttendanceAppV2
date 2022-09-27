@@ -10,7 +10,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.staugustine.dimitsattendance"
+        applicationId "com.avaantony.dimitsattendance"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
