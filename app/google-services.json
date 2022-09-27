@@ -1,41 +1,42 @@
 {
   "project_info": {
-    "project_number": "231049309059",
-    "project_id": "attendanceavaantonyapp",
-    "storage_bucket": "attendanceavaantonyapp.appspot.com"
+    "project_number": "475412662513",
+    "firebase_url": "https://nothing-49f0a-default-rtdb.firebaseio.com",
+    "project_id": "nothing-49f0a",
+    "storage_bucket": "nothing-49f0a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:231049309059:android:e5024a3a325cdafa9fe4b6",
+        "mobilesdk_app_id": "1:475412662513:android:57889ff485aa3444c20150",
         "android_client_info": {
-          "package_name": "com.avaantony.dimitsattendance"
+          "package_name": "com.staugustine.dimitsattendance"
         }
       },
       "oauth_client": [
         {
-          "client_id": "231049309059-3j0kf7m0t3j67ckp8gcu3cvvd2tpptcj.apps.googleusercontent.com",
+          "client_id": "475412662513-87muvja6ptvidl2roh2eg1kvs6hov80a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.avaantony.dimitsattendance",
+            "package_name": "com.staugustine.dimitsattendance",
             "certificate_hash": "a9103cc0b552a8e43810a69f9c92fac1621cde6e"
           }
         },
         {
-          "client_id": "231049309059-95neqth075v1287l06jtdvjpbflhugl5.apps.googleusercontent.com",
+          "client_id": "475412662513-nu04huafk27phd0ui1re31t8g0h60hta.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAQagXJvt0Lepmh1lvSE2bSKMpPFLA3WBg"
+          "current_key": "AIzaSyDr2WLbJoQnnl0luZLUI91GAt2rum464e8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "231049309059-95neqth075v1287l06jtdvjpbflhugl5.apps.googleusercontent.com",
+              "client_id": "475412662513-nu04huafk27phd0ui1re31t8g0h60hta.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.avaantony.dimitsattendance">
+    package="com.staugustine.dimitsattendance">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -15,33 +15,33 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.avaantony.dimitsattendance.ui.verification.UsersVerification"
+            android:name=".ui.verification.UsersVerification"
             android:exported="true" />
         <activity
-            android:name="com.avaantony.dimitsattendance.InsertGradeDetailActivity"
+            android:name=".InsertGradeDetailActivity"
             android:exported="true" />
         <activity
-            android:name="com.avaantony.dimitsattendance.ui.gradeDetail.GradeDetailActivity"
+            android:name=".ui.gradeDetail.GradeDetailActivity"
             android:exported="true" />
         <activity
-            android:name="com.avaantony.dimitsattendance.ui.grade.HomeActivity"
+            android:name=".ui.grade.HomeActivity"
             android:exported="true" />
         <activity
-            android:name="com.avaantony.dimitsattendance.Insert_Grade_Activity"
+            android:name=".Insert_Grade_Activity"
             android:exported="true" />
         <activity
-            android:name="com.avaantony.dimitsattendance.RegisterActivity"
+            android:name=".RegisterActivity"
             android:exported="true" />
         <activity
-            android:name="com.avaantony.dimitsattendance.AdminActivity"
+            android:name=".AdminActivity"
             android:exported="true" />
         <activity
-            android:name="com.avaantony.dimitsattendance.ui.login.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.avaantony.dimitsattendance.StartActivity"
+            android:name=".StartActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
@@ -52,22 +52,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.avaantony.dimitsattendance.StudentProfile"
+            android:name=".StudentProfile"
             android:exported="true"
             android:theme="@style/AppTheme2" />
         <activity
-            android:name="com.avaantony.dimitsattendance.ui.reportDetail.Reports_Detail_Activity"
+            android:name=".ui.reportDetail.Reports_Detail_Activity"
             android:theme="@style/AppTheme2" />
         <activity
-            android:name="com.avaantony.dimitsattendance.Reports_Activity"
+            android:name=".Reports_Activity"
             android:theme="@style/AppTheme2" />
         <activity
-            android:name="com.avaantony.dimitsattendance.ClassDetail_Activity"
+            android:name=".ClassDetail_Activity"
             android:theme="@style/FullScreenTheme" />
         <activity
-            android:name="com.avaantony.dimitsattendance.Insert_class_Activity"
+            android:name=".Insert_class_Activity"
             android:theme="@style/AppTheme2" />
-        <activity android:name="com.avaantony.dimitsattendance.ui.main.MainActivity">
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
