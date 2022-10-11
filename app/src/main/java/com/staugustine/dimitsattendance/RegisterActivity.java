@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.databinding.ActivityRegisterBinding;
+import com.staugustine.dimitsattendance.ui.login.LoginActivity;
 
 import java.util.HashMap;
 
