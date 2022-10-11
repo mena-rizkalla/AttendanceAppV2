@@ -36,12 +36,13 @@ public class ReportsDetailViewModel extends ViewModel implements IReportDetailCa
 
 
     private void readReportsDetail(String classname, String subjName, String date) {
-        //attendance_students_lists.clear();
+//        attendance_students_lists.clear();
         List<Attendance_Students_List> attendance_students_lists = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Classes").child(classname+subjName).child("Attendance").child(date);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                attendance_students_lists.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Attendance_Students_List attendanceStudentsList = dataSnapshot.getValue(Attendance_Students_List.class);
                     attendance_students_lists.add(attendanceStudentsList);
@@ -53,6 +54,7 @@ public class ReportsDetailViewModel extends ViewModel implements IReportDetailCa
                 }
 
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

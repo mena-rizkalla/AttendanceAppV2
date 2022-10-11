@@ -70,8 +70,14 @@ public class Reports_Detail_Activity extends AppCompatActivity {
         reportsDetailViewModel.getStudentList(classname,subjName,date).observe(this,studentList ->{
             reportsNewAdapter = new Reports_Detail_NewAdapter(Reports_Detail_Activity.this,studentList);
 
+
+
+
             recyclerView.setAdapter(reportsNewAdapter);
+
+
         });
+       // reportsNewAdapter.notifyDataSetChanged();
 
         binding.exportexcel.setOnClickListener(new View.OnClickListener() {
             @Override

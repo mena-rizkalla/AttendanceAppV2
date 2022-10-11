@@ -1,6 +1,8 @@
 package com.staugustine.dimitsattendance.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
@@ -12,8 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.staugustine.dimitsattendance.R;
 import com.staugustine.dimitsattendance.StudentProfile;
+import com.staugustine.dimitsattendance.common.Common;
 import com.staugustine.dimitsattendance.model.Attendance_Students_List;
 
 import java.util.List;
@@ -62,6 +67,33 @@ public class Reports_Detail_NewAdapter extends RecyclerView.Adapter<Reports_Deta
                 intent.putExtra("name",attendanceStudentsList.getStudentName());
                 intent.putExtra("class_id",attendanceStudentsList.getClassID());
                 mContext.startActivity(intent);**/
+                AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
+                alertDialog.setTitle("Alert");
+                alertDialog.setMessage("Are you sure you want change student attendance");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        DatabaseReference f = FirebaseDatabase.getInstance().getReference("Classes")
+                                .child(Common.currentClassName)
+                                .child("Attendance").child(attendanceStudentsList.getDate()).child(attendanceStudentsList.getStudentRegNo()+attendanceStudentsList.getStudentName()).child("attendance");
+                        if (attendanceStudentsList.getAttendance().equals("Present")){
+                            f.setValue("Absent");
+
+                        }else {
+                            f.setValue("Present");
+
+                        }
+                    }
+                });
+
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,"Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                alertDialog.show();
 
             }
         });
