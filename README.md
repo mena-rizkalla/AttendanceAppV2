@@ -1,6 +1,6 @@
 <h1> A School Attendance App with a lot of great features. </h1>
 
-<h2>App Features :<h2/>
+<h3>App Features :<h3/>
 1 - Adding new Classes to the App.
 
 2 - Removing any class by long clicking on it.
