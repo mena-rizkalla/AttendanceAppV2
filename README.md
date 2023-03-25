@@ -20,6 +20,10 @@
 9 - Attendances of Students are stored in the " Reports " section where every item represents the attendance of a day entitled with the date of the day ( ex : 14-11-2021 ).
 
 10 - On clicking on the " Day Number " button, the full report of the attendance of the day selected shows up giving you the attendance of each student
+
+11 - you can import students using excel sheet 
+
+12 - you can export reports as excel sheet
 <hr>
 <h2>Images :<h2/>
 
