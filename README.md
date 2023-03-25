@@ -41,7 +41,6 @@
     <td>
       <img src ="https://user-images.githubusercontent.com/52071472/227737433-bc579266-e506-4608-9bca-ceff465a12e8.jpg"/>
     </td>
-    
     <td>
       <img src ="https://user-images.githubusercontent.com/52071472/227737437-22900047-d4bb-4f59-a1e5-553919ae3188.jpg"/>
     </td>
